@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Portfolio — My Journey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #faf7f2;
+      --warm: #fff9f0;
+      --ink: #1a1207;
+      --espresso: #2c1a0e;
+      --amber: #c8732a;
+      --gold: #d4a843;
+      --sage: #7a8c6e;
+      --parchment: #e8dcc8;
+      --shadow: rgba(44,26,14,0.13);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;transition:background .35s;}
+    nav.scrolled{background:rgba(26,18,7,.93);backdrop-filter:blur(14px);}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--cream);letter-spacing:.05em;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:rgba(250,247,242,.65);text-decoration:none;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;transition:color .25s;}
+    .nav-links a:hover{color:var(--gold);}
+    @media(max-width:640px){.nav-links{display:none;}}
+
+    .hero{min-height:100vh;background:var(--espresso);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:5rem 2rem;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(200,115,42,.25) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 20% 20%,rgba(212,168,67,.15) 0%,transparent 60%);}
+    .hero-tag{font-size:.72rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:fadeUp .8s .2s forwards;}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,8vw,6.5rem);font-weight:700;color:var(--cream);line-height:1.05;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards;}
+    .hero h1 em{font-style:italic;color:var(--gold);}
+    .hero-sub{font-size:clamp(.95rem,2vw,1.15rem);color:rgba(250,247,242,.55);margin-top:1.4rem;max-width:460px;line-height:1.7;opacity:0;animation:fadeUp .8s .6s forwards;}
+    .hero-line{width:55px;height:1px;background:var(--gold);margin:2rem auto;opacity:0;animation:scaleIn .6s .8s forwards;}
+    .hero-cta{display:inline-block;margin-top:.5rem;padding:.85rem 2.2rem;background:var(--gold);color:var(--espresso);border-radius:8px;font-weight:500;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;opacity:0;animation:fadeUp .8s 1s forwards;transition:transform .25s,box-shadow .25s;}
+    .hero-cta:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.35);}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(250,247,242,.35);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:0;animation:fadeIn 1s 1.4s forwards;}
+    .scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,rgba(212,168,67,.6),transparent);animation:pulse 2s infinite;}
+
+    section{padding:5.5rem 2rem;}
+    .container{max-width:1080px;margin:0 auto;}
+    .sec-label{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--amber);margin-bottom:.8rem;font-weight:500;}
+    .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:var(--espresso);margin-bottom:.9rem;line-height:1.1;}
+    .sec-desc{color:#5a4a3a;font-size:1rem;line-height:1.75;max-width:540px;margin-bottom:3rem;}
+
+    .about-sec{background:var(--warm);}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    @media(max-width:700px){.about-grid{grid-template-columns:1fr;gap:2.5rem;}}
+    .about-frame{position:relative;}
+    .about-img-box{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,var(--parchment),var(--amber));border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);overflow:hidden;cursor:pointer;transition:box-shadow .3s,transform .3s;position:relative;}
+    .about-img-box:hover{box-shadow:0 14px 40px rgba(200,115,42,.38);transform:translateY(-3px);}
+    #photoPlaceholder span{display:block;text-align:center;transition:transform .25s;}
+    .about-img-box:hover #photoPlaceholder span:first-child{transform:scale(1.12);}
+    .about-deco{position:absolute;bottom:-14px;right:-14px;width:78%;height:78%;border:2px solid var(--gold);border-radius:6px;z-index:-1;}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.2rem;}
+    .stat{background:var(--cream);border:1px solid var(--parchment);border-radius:10px;padding:1.2rem;text-align:center;}
+    .stat-n{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--amber);font-weight:700;}
+    .stat-l{font-size:.72rem;color:#8a7a6a;letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;}
+
+    .upload-sec{background:var(--espresso);position:relative;overflow:hidden;}
+    .upload-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 50% at 85% 50%,rgba(212,168,67,.1) 0%,transparent 70%);}
+    .upload-sec .sec-title{color:var(--cream);}
+    .upload-sec .sec-label{color:var(--gold);}
+    .upload-sec .sec-desc{color:rgba(250,247,242,.55);}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;}
+    @media(max-width:640px){.form-grid{grid-template-columns:1fr;}}
+    .fg{display:flex;flex-direction:column;gap:.45rem;}
+    .fg.full{grid-column:1/-1;}
+    label{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+    input[type=text],input[type=email],select,textarea{background:rgba(250,247,242,.07);border:1px solid rgba(250,247,242,.15);border-radius:8px;padding:.8rem 1rem;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.92rem;outline:none;width:100%;transition:border-color .22s,background .22s;}
+    input[type=text]:focus,input[type=email]:focus,select:focus,textarea:focus{border-color:var(--gold);background:rgba(250,247,242,.11);}
+    select option{background:var(--espresso);}
+    textarea{resize:vertical;min-height:110px;}
+    .upload-sec input::placeholder,.upload-sec textarea::placeholder{color:rgba(250,247,242,.35);}
+
+    .drop-zone{border:2px dashed rgba(212,168,67,.4);border-radius:12px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;background:rgba(250,247,242,.04);}
+    .drop-zone:hover,.drop-zone.over{border-color:var(--gold);background:rgba(212,168,67,.08);}
+    .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .dz-icon{font-size:2.2rem;margin-bottom:.7rem;}
+    .dz-title{color:var(--cream);font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.35rem;}
+    .dz-sub{color:rgba(250,247,242,.45);font-size:.82rem;}
+
+    .staged-list{margin-top:1.1rem;display:flex;flex-wrap:wrap;gap:.7rem;}
+    .staged-item{background:rgba(250,247,242,.08);border:1px solid rgba(212,168,67,.28);border-radius:9px;padding:.55rem .85rem;display:flex;align-items:center;gap:.6rem;max-width:230px;animation:fadeUp .3s both;}
+    .s-icon{font-size:1.3rem;flex-shrink:0;}
+    .s-thumb{width:34px;height:34px;border-radius:5px;object-fit:cover;flex-shrink:0;}
+    .s-info{flex:1;overflow:hidden;}
+    .s-name{font-size:.75rem;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
+    .s-size{font-size:.65rem;color:rgba(250,247,242,.4);margin-top:2px;}
+    .s-del{background:none;border:none;color:rgba(250,247,242,.45);cursor:pointer;font-size:.8rem;padding:0;flex-shrink:0;transition:color .2s;}
+    .s-del:hover{color:#ff8080;}
+
+    .submit-btn{margin-top:2rem;background:var(--gold);color:var(--espresso);border:none;padding:.95rem 2.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+    .submit-btn:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.28);}
+
+    .gallery-sec{background:var(--warm);}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.6rem;}
+    .ucard{background:var(--cream);border:1px solid var(--parchment);border-radius:14px;overflow:hidden;animation:fadeUp .4s both;transition:transform .25s,box-shadow .25s;}
+    .ucard:hover{transform:translateY(-5px);box-shadow:0 16px 42px var(--shadow);}
+
+    .ucard-img{width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;transition:transform .35s;}
+    .ucard-img:hover{transform:scale(1.03);}
+    .ucard-video{width:100%;max-height:220px;display:block;background:#000;}
+    .ucard-audio-box{background:linear-gradient(135deg,#1e0f06,#2c1a0e);padding:1.6rem 1.2rem;display:flex;flex-direction:column;align-items:center;gap:.8rem;}
+    .audio-wave{font-size:2rem;}
+    .ucard-audio-box audio{width:100%;}
+    .ucard-file-box{height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,var(--parchment),#ddd0b8);}
+    .file-big-icon{font-size:3rem;}
+    .file-ext{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--espresso);opacity:.55;font-weight:700;}
+
+    .ucard-body{padding:1.1rem 1.3rem;}
+    .ucard-cat{display:inline-block;background:var(--parchment);color:var(--espresso);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .7rem;border-radius:100px;margin-bottom:.5rem;font-weight:500;}
+    .ucard-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--espresso);margin-bottom:.25rem;}
+    .ucard-unit{font-size:.72rem;color:var(--sage);margin-bottom:.5rem;}
+    .ucard-desc{font-size:.82rem;color:#6a5a4a;line-height:1.6;margin-bottom:.9rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .ucard-actions{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .btn-action{padding:.5rem .9rem;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;transition:all .2s;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;letter-spacing:.03em;}
+    .btn-view-img{background:var(--espresso);color:var(--cream);}
+    .btn-view-img:hover{background:var(--amber);}
+    .btn-dl{background:transparent;border:1px solid var(--parchment);color:var(--amber);}
+    .btn-dl:hover{background:var(--parchment);}
+    .btn-open{background:var(--espresso);color:var(--cream);}
+    .btn-open:hover{background:var(--amber);}
+    .btn-del{background:transparent;border:1px solid var(--parchment);color:#b07060;}
+    .btn-del:hover{background:#fde8e8;border-color:#e07070;color:#c04040;}
+
+    .empty-gallery{grid-column:1/-1;text-align:center;padding:3.5rem;color:#9a8a7a;font-size:.95rem;font-style:italic;border:2px dashed var(--parchment);border-radius:14px;}
+
+    .comments-sec{background:var(--cream);}
+    .comment-list{display:flex;flex-direction:column;gap:1.3rem;margin-bottom:3rem;}
+    .cmt{background:var(--warm);border:1px solid var(--parchment);border-radius:12px;padding:1.3rem;display:flex;gap:.9rem;animation:fadeUp .35s both;}
+    .cmt-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff;flex-shrink:0;font-weight:700;}
+    .cmt-author{font-weight:500;color:var(--espresso);font-size:.88rem;}
+    .cmt-date{font-size:.72rem;color:var(--sage);margin-top:.15rem;}
+    .cmt-text{font-size:.9rem;color:#5a4a3a;line-height:1.68;margin-top:.45rem;}
+
+    .cmt-form{background:var(--warm);border:1px solid var(--parchment);border-radius:16px;padding:2rem;}
+    .cmt-form-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--espresso);margin-bottom:1.3rem;}
+    .cmt-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
+    @media(max-width:560px){.cmt-form-grid{grid-template-columns:1fr;}}
+    .cmt-form-grid input,.cmt-form textarea{background:var(--cream);border:1px solid var(--parchment);color:var(--ink);border-radius:8px;padding:.72rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;width:100%;outline:none;transition:border-color .22s;}
+    .cmt-form-grid input:focus,.cmt-form textarea:focus{border-color:var(--amber);}
+    .cmt-submit{margin-top:.9rem;background:var(--espresso);color:var(--cream);border:none;padding:.82rem 2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .25s;}
+    .cmt-submit:hover{background:var(--amber);}
+
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(8,4,0,.94);z-index:1000;align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;}
+    .lightbox.open{display:flex;}
+    .lb-img{max-width:92vw;max-height:90vh;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:scaleIn .25s ease;}
+    .lb-close{position:fixed;top:1rem;right:1.3rem;background:rgba(255,255,255,.12);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:1001;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+    .lb-close:hover{background:rgba(255,255,255,.22);}
+
+    .ptab{padding:.52rem 1.2rem;border:1.5px solid rgba(212,168,67,.35);border-radius:100px;background:transparent;color:rgba(250,247,242,.6);font-family:'DM Sans',sans-serif;font-size:.8rem;cursor:pointer;transition:all .22s;letter-spacing:.04em;}
+    .ptab:hover{border-color:var(--gold);color:var(--gold);}
+    .ptab.active{background:var(--gold);border-color:var(--gold);color:var(--espresso);font-weight:600;}
+    .prac-panel{display:none;}
+    .prac-panel.active{display:block;animation:fadeUp .38s both;}
+    .fc-cat{padding:.38rem .95rem;border:1px solid rgba(212,168,67,.3);border-radius:100px;background:transparent;color:rgba(250,247,242,.6);font-size:.75rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .fc-cat:hover,.fc-cat.active{background:rgba(212,168,67,.2);border-color:var(--gold);color:var(--gold);}
+    .verb-chip{padding:.42rem 1rem;border:1.5px solid rgba(212,168,67,.3);border-radius:100px;background:transparent;color:rgba(250,247,242,.7);font-size:.8rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .verb-chip:hover,.verb-chip.selected{background:var(--gold);border-color:var(--gold);color:var(--espresso);font-weight:600;}
+    .quiz-opt{padding:.82rem 1rem;border:1.5px solid rgba(212,168,67,.3);border-radius:10px;background:transparent;color:rgba(250,247,242,.85);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;transition:all .22s;text-align:left;width:100%;}
+    .quiz-opt:hover{border-color:var(--gold);background:rgba(212,168,67,.1);color:var(--cream);}
+    .quiz-opt.correct{background:rgba(122,140,110,.3);border-color:#7a8c6e;color:#c8e8b4;pointer-events:none;}
+    .quiz-opt.wrong{background:rgba(168,76,42,.3);border-color:#a84c2a;color:#ffb4a0;pointer-events:none;}
+    .quiz-opt.disabled{pointer-events:none;opacity:.45;}
+    .qcat{padding:.38rem .9rem;border:1px solid rgba(212,168,67,.3);border-radius:100px;background:transparent;color:rgba(250,247,242,.55);font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;transition:all .2s;}
+    .qcat:hover,.qcat.active{background:rgba(212,168,67,.2);border-color:var(--gold);color:var(--gold);}
+    .wb-slot{width:42px;height:42px;border-radius:8px;border:2px solid rgba(212,168,67,.4);background:rgba(250,247,242,.06);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--cream);transition:all .2s;cursor:pointer;}
+    .wb-slot.filled{border-color:var(--gold);background:rgba(212,168,67,.15);}
+    .wb-slot.correct-slot{border-color:#7a8c6e;background:rgba(122,140,110,.25);color:#c8e8b4;}
+    .wb-slot.wrong-slot{border-color:#a84c2a;background:rgba(168,76,42,.25);color:#ffb4a0;}
+    .wb-letter-btn{width:42px;height:42px;border-radius:8px;border:2px solid rgba(212,168,67,.4);background:rgba(250,247,242,.08);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--cream);cursor:pointer;transition:all .2s;}
+    .wb-letter-btn:hover{background:rgba(212,168,67,.2);border-color:var(--gold);}
+    .wb-letter-btn.used{opacity:.2;pointer-events:none;}
+    .phrase-card{background:rgba(250,247,242,.06);border:1px solid rgba(212,168,67,.2);border-radius:12px;padding:1.2rem;transition:all .25s;display:flex;flex-direction:column;gap:.35rem;}
+    .phrase-card:hover{background:rgba(212,168,67,.1);border-color:rgba(212,168,67,.4);transform:translateY(-2px);}
+    .phrase-en{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--cream);}
+    .phrase-es{font-size:.85rem;color:rgba(250,247,242,.55);font-style:italic;}
+    .phrase-cat{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);}
+    .phrase-speak-btn{margin-top:.5rem;align-self:flex-start;display:flex;align-items:center;gap:.4rem;padding:.42rem 1rem;border-radius:100px;border:1.5px solid rgba(212,168,67,.4);background:transparent;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;transition:all .25s;letter-spacing:.04em;}
+    .phrase-speak-btn:hover{background:rgba(212,168,67,.18);border-color:var(--gold);}
+    .prac-btn-gold{padding:.6rem 1.4rem;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;background:var(--gold);color:var(--espresso);font-weight:600;transition:background .2s;}
+    .prac-btn-gold:hover{background:var(--cream);}
+    .prac-btn-sec{padding:.6rem 1.2rem;border-radius:8px;border:1.5px solid rgba(212,168,67,.35);background:transparent;color:rgba(250,247,242,.7);font-family:'DM Sans',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;}
+    .prac-btn-sec:hover{border-color:var(--gold);color:var(--gold);}
+    .tense-block{margin-bottom:1.3rem;}
+    .tense-name{font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:.55rem;font-weight:600;}
+    .conj-grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;}
+    .conj-row{display:flex;gap:.5rem;align-items:baseline;padding:.35rem .6rem;border-radius:6px;transition:background .2s;}
+    .conj-row:hover{background:rgba(212,168,67,.1);}
+    .conj-pro{font-size:.76rem;color:rgba(250,247,242,.4);min-width:42px;}
+    .conj-form{font-size:.92rem;color:var(--cream);font-weight:500;}
+
+    footer{background:#0e0903;color:rgba(250,247,242,.45);text-align:center;padding:2.8rem 2rem;}
+    .f-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:.8rem;}
+    footer p{font-size:.8rem;line-height:1.8;}
+    footer a{color:var(--gold);text-decoration:none;}
+
+    .toast{position:fixed;bottom:1.8rem;right:1.8rem;background:var(--espresso);color:var(--cream);padding:.9rem 1.4rem;border-radius:10px;border-left:4px solid var(--gold);font-size:.85rem;z-index:9998;transform:translateY(80px);opacity:0;transition:all .38s;max-width:300px;pointer-events:none;}
+    .toast.show{transform:translateY(0);opacity:1;}
+
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s,transform .65s;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.92);}to{opacity:1;transform:scale(1);}}
+    @keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">English Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#upload">Upload</a></li>
+    <li><a href="#gallery">Mis Evidencias</a></li>
+    <li><a href="#comments">Comments</a></li>
+    <li><a href="#practice" style="color:var(--gold);font-weight:500;">🎯 Practice</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-tag">English Language Course · 2024–2025</p>
+  <h1>My English<br><em>Portfolio</em></h1>
+  <div class="hero-line"></div>
+  <p class="hero-sub">A curated collection of my language learning journey — writing, speaking, grammar, reading and listening evidence.</p>
+  <a href="#gallery" class="hero-cta">Explore My Work</a>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<section class="about-sec" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-frame">
+        <div class="about-img-box" id="aboutImgBox" onclick="document.getElementById('photoInput').click()" title="Haz clic para subir tu foto">
+          <input type="file" id="photoInput" accept=".jpg,.jpeg,.png,.webp" style="display:none" onchange="loadProfilePhoto(this)">
+          <img id="profilePhoto" src="" alt="Mi foto" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+          <div id="photoPlaceholder" style="display:flex;flex-direction:column;align-items:center;gap:0.8rem;pointer-events:none;">
+            <span style="font-size:3.5rem;">📷</span>
+            <span style="font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.7);font-family:'DM Sans',sans-serif;">Haz clic para subir<br>tu foto (.jpg)</span>
+          </div>
+        </div>
+        <div class="about-deco"></div>
+      </div>
+      <div>
+        <p class="sec-label reveal">About Me</p>
+        <h2 class="sec-title reveal">Welcome to <em style="font-style:italic;color:var(--amber)">My Blog!</em></h2>
+        <p class="sec-desc reveal" style="margin-bottom:1rem;">Hello! My name is <strong style="color:var(--espresso)">Victor Henao</strong>. Welcome to my blog.</p>
+        <p class="sec-desc reveal" style="margin-bottom:1rem;">Here you will find my English assignments, projects, and learning evidence. This space is dedicated to sharing my progress and the work I complete as part of my academic journey.</p>
+        <p class="sec-desc reveal" style="margin-bottom:1rem;">I am <strong style="color:var(--espresso)">37 years old</strong> and I live in <strong style="color:var(--espresso)">Medellín</strong>. Currently, I am studying <strong style="color:var(--espresso)">Software Analysis and Development Technology</strong>, guided by my professor <strong style="color:var(--espresso)">Alejandra</strong>.</p>
+        <p class="sec-desc reveal">Thank you for visiting my blog. I hope you enjoy exploring my work and following my learning process!</p>
+        <div class="stats-grid reveal">
+          <div class="stat"><div class="stat-n">37</div><div class="stat-l">Years Old</div></div>
+          <div class="stat"><div class="stat-n">MDE</div><div class="stat-l">Medellín</div></div>
+          <div class="stat"><div class="stat-n">SADT</div><div class="stat-l">Software Dev.</div></div>
+          <div class="stat"><div class="stat-n">A2→B1</div><div class="stat-l">English Level</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="upload-sec" id="upload">
+  <div class="container">
+    <p class="sec-label reveal">Upload</p>
+    <h2 class="sec-title reveal">Subir Nueva Evidencia</h2>
+    <p class="sec-desc reveal">Sube imágenes, videos, audios, PDFs o cualquier archivo. Se muestran al instante en la galería con reproducción real.</p>
+    <div class="form-grid reveal">
+      <div class="fg">
+        <label>Título del trabajo</label>
+        <input type="text" id="upTitle" placeholder="Ej: My Autobiography">
+      </div>
+      <div class="fg">
+        <label>Categoría</label>
+        <select id="upCat">
+          <option value="">Selecciona categoría...</option>
+          <option value="writing">✍️ Writing</option>
+          <option value="speaking">🎤 Speaking</option>
+          <option value="reading">📖 Reading</option>
+          <option value="listening">🎧 Listening</option>
+          <option value="grammar">📐 Grammar</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Unidad / Tema</label>
+        <input type="text" id="upUnit" placeholder="Ej: Unit 1 — Personal Identity">
+      </div>
+      <div class="fg">
+        <label>Fecha</label>
+        <input type="text" id="upDate" placeholder="Ej: Marzo 2025">
+      </div>
+      <div class="fg full">
+        <label>Descripción</label>
+        <textarea id="upDesc" placeholder="Describe el trabajo, qué habilidades practicaste y qué aprendiste..."></textarea>
+      </div>
+      <div class="fg full">
+        <label>Seleccionar archivos</label>
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" multiple>
+          <div class="dz-icon">📎</div>
+          <div class="dz-title">Arrastra aquí o haz clic para seleccionar</div>
+          <div class="dz-sub">Imágenes · Videos · Audios · PDF · Word · Excel · Cualquier formato</div>
+        </div>
+        <div class="staged-list" id="stagedList"></div>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="submitEvidence()">📤 Publicar en Galería</button>
+  </div>
+</section>
+
+<section class="gallery-sec" id="gallery">
+  <div class="container">
+    <p class="sec-label reveal">Portfolio</p>
+    <h2 class="sec-title reveal">Mis Evidencias</h2>
+    <p class="sec-desc reveal" style="color:#5a4a3a;">Aquí aparecerán todos los trabajos que subas — guardados permanentemente aunque cierres el navegador.</p>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="empty-gallery" id="emptyMsg">
+        <div style="font-size:3rem;margin-bottom:1rem;">📂</div>
+        <div style="font-weight:600;margin-bottom:.5rem;color:#7a6a5a;">Aún no hay evidencias publicadas</div>
+        <div style="font-size:.88rem;">Ve a la sección <strong>Upload</strong> para subir tu primer trabajo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="comments-sec" id="comments">
+  <div class="container">
+    <p class="sec-label reveal">Comunidad</p>
+    <h2 class="sec-title reveal">Comentarios & Feedback</h2>
+    <p class="sec-desc reveal">Deja un comentario o retroalimentación sobre el portafolio.</p>
+    <div class="comment-list" id="commentList"></div>
+    <div class="cmt-form">
+      <div class="cmt-form-title">💬 Dejar un Comentario</div>
+      <div class="cmt-form-grid">
+        <input type="text" id="cmtName" placeholder="Tu nombre *">
+        <input type="email" id="cmtEmail" placeholder="tu@email.com (opcional)">
+      </div>
+      <textarea id="cmtText" style="width:100%;min-height:100px;" placeholder="Escribe tu comentario o retroalimentación aquí..."></textarea>
+      <br>
+      <button class="cmt-submit" onclick="addComment()">Publicar Comentario →</button>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--espresso);padding:5.5rem 2rem;position:relative;overflow:hidden;" id="practice">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 80%,rgba(212,168,67,.1) 0%,transparent 65%);pointer-events:none;"></div>
+  <div class="container">
+    <p class="sec-label reveal">Interactivo</p>
+    <h2 class="sec-title reveal" style="color:var(--cream);">Practice <em style="font-style:italic;color:var(--gold)">English</em></h2>
+    <p class="sec-desc reveal">Aprende vocabulario, conjuga verbos, completa frases y pon a prueba tu inglés.</p>
+
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;" class="reveal">
+      <button class="ptab active" onclick="showPrac('flashcards',this)">🃏 Flashcards</button>
+      <button class="ptab" onclick="showPrac('verbs',this)">📝 Verbos</button>
+      <button class="ptab" onclick="showPrac('quiz',this)">🧠 Quiz</button>
+      <button class="ptab" onclick="showPrac('wordbuilder',this)">🔤 Word Builder</button>
+      <button class="ptab" onclick="showPrac('phrases',this)">💬 Frases Útiles</button>
+    </div>
+
+    <div id="prac-flashcards" class="prac-panel active">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1.4rem;">
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;">
+          <button class="fc-cat active" onclick="setFCcat('all',this)">Todos</button>
+          <button class="fc-cat" onclick="setFCcat('animals',this)">🐾 Animals</button>
+          <button class="fc-cat" onclick="setFCcat('food',this)">🍎 Food</button>
+          <button class="fc-cat" onclick="setFCcat('travel',this)">✈️ Travel</button>
+          <button class="fc-cat" onclick="setFCcat('emotions',this)">😊 Emotions</button>
+          <button class="fc-cat" onclick="setFCcat('body',this)">🫀 Body</button>
+          <button class="fc-cat" onclick="setFCcat('colors',this)">🎨 Colors</button>
+        </div>
+        <div id="flashcard" onclick="flipFC()" style="width:100%;max-width:460px;height:230px;perspective:1000px;cursor:pointer;">
+          <div id="fc-inner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);">
+            <div style="position:absolute;inset:0;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;backface-visibility:hidden;padding:2rem;background:linear-gradient(135deg,rgba(250,247,242,.1),rgba(250,247,242,.05));border:1px solid rgba(212,168,67,.3);">
+              <span id="fc-emoji" style="font-size:2.8rem;"></span>
+              <span id="fc-word" style="font-family:Playfair Display,serif;font-size:2rem;color:var(--cream);font-weight:700;"></span>
+              <span style="font-size:.75rem;color:rgba(250,247,242,.4);letter-spacing:.12em;text-transform:uppercase;">Haz clic para ver traducción</span>
+            </div>
+            <div style="position:absolute;inset:0;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;backface-visibility:hidden;padding:2rem;background:linear-gradient(135deg,rgba(212,168,67,.22),rgba(200,115,42,.18));border:1px solid rgba(212,168,67,.5);transform:rotateY(180deg);">
+              <span id="fc-translation" style="font-family:Playfair Display,serif;font-size:1.7rem;color:var(--gold);font-weight:700;"></span>
+              <span id="fc-example" style="font-size:.88rem;color:rgba(250,247,242,.75);font-style:italic;text-align:center;max-width:340px;"></span>
+              <span id="fc-phonetic" style="font-size:.8rem;color:rgba(212,168,67,.7);letter-spacing:.05em;"></span>
+            </div>
+          </div>
+        </div>
+        <div style="width:100%;max-width:460px;height:4px;background:rgba(250,247,242,.1);border-radius:4px;overflow:hidden;">
+          <div id="fc-prog" style="height:100%;background:var(--gold);border-radius:4px;transition:width .4s;width:0%;"></div>
+        </div>
+        <div style="display:flex;gap:.8rem;align-items:center;">
+          <button class="prac-btn-sec" onclick="fcNav(-1)">← Anterior</button>
+          <span id="fc-counter" style="color:rgba(250,247,242,.45);font-size:.8rem;min-width:60px;text-align:center;"></span>
+          <button class="prac-btn-gold" onclick="fcNav(1)">Siguiente →</button>
+        </div>
+        <button onclick="speakWord()" style="display:flex;align-items:center;gap:.55rem;padding:.7rem 1.6rem;border-radius:100px;border:2px solid rgba(212,168,67,.5);background:rgba(212,168,67,.1);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;">
+          🔊 Escuchar palabra
+        </button>
+      </div>
+    </div>
+
+    <div id="prac-verbs" class="prac-panel">
+      <div style="display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start;">
+        <div>
+          <p style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(212,168,67,.8);margin-bottom:.8rem;font-weight:500;">Selecciona un verbo</p>
+          <div style="display:flex;flex-wrap:wrap;gap:.45rem;" id="verbList"></div>
+        </div>
+        <div id="verb-table-box" style="background:rgba(250,247,242,.05);border:1px solid rgba(212,168,67,.2);border-radius:14px;padding:1.5rem;display:none;animation:fadeUp .35s both;">
+          <div id="vt-title" style="font-family:Playfair Display,serif;font-size:1.6rem;color:var(--gold);margin-bottom:.2rem;text-transform:capitalize;"></div>
+          <div id="vt-meaning" style="font-size:.82rem;color:rgba(250,247,242,.5);margin-bottom:1.4rem;font-style:italic;"></div>
+          <div id="vt-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="prac-quiz" class="prac-panel">
+      <div style="max-width:580px;margin:0 auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;">
+          <span id="quiz-score-disp" style="font-family:Playfair Display,serif;font-size:1.05rem;color:var(--gold);">Score: 0</span>
+          <span id="quiz-lives-disp" style="font-size:1.1rem;letter-spacing:.2em;">❤️❤️❤️</span>
+        </div>
+        <div id="quiz-q-box" style="background:rgba(250,247,242,.06);border:1px solid rgba(212,168,67,.25);border-radius:14px;padding:2rem;text-align:center;margin-bottom:1.1rem;">
+          <div id="quiz-type-label" style="font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:.8rem;"></div>
+          <div id="quiz-q" style="font-family:Playfair Display,serif;font-size:1.45rem;color:var(--cream);line-height:1.3;"></div>
+        </div>
+        <div id="quiz-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.9rem;"></div>
+        <div id="quiz-feedback" style="text-align:center;font-size:.92rem;min-height:1.4rem;font-style:italic;color:var(--gold);margin-bottom:.6rem;"></div>
+        <button id="quiz-next-btn" onclick="nextQuizQ()" style="display:none;width:100%;padding:.85rem;border-radius:10px;border:none;background:var(--gold);color:var(--espresso);font-family:DM Sans,sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;">Siguiente pregunta →</button>
+        <div id="quiz-result" style="display:none;text-align:center;padding:2.5rem;background:rgba(250,247,242,.06);border:1px solid rgba(212,168,67,.3);border-radius:14px;animation:scaleIn .4s both;">
+          <div id="qr-emoji" style="font-size:3.5rem;margin-bottom:.7rem;"></div>
+          <div id="qr-title" style="font-family:Playfair Display,serif;font-size:1.8rem;color:var(--gold);margin-bottom:.4rem;"></div>
+          <div id="qr-sub" style="color:rgba(250,247,242,.6);font-size:.9rem;margin-bottom:1.4rem;"></div>
+          <button onclick="startQuiz()" style="padding:.8rem 2rem;border-radius:8px;border:none;background:var(--gold);color:var(--espresso);font-family:DM Sans,sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;">Jugar de nuevo 🔄</button>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
+          <span style="font-size:.75rem;color:rgba(250,247,242,.4);align-self:center;">Categoría:</span>
+          <button class="qcat active" onclick="setQuizCat('mixed',this)">Mixto</button>
+          <button class="qcat" onclick="setQuizCat('vocab',this)">Vocabulario</button>
+          <button class="qcat" onclick="setQuizCat('verbs',this)">Verbos</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="prac-wordbuilder" class="prac-panel">
+      <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:1.2rem;">
+        <div style="background:rgba(250,247,242,.06);border:1px solid rgba(212,168,67,.25);border-radius:12px;padding:1.4rem;text-align:center;">
+          <div style="font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;">Descifra la palabra en inglés</div>
+          <div id="wb-emoji" style="font-size:2.5rem;margin-bottom:.4rem;"></div>
+          <div id="wb-hint" style="font-family:Playfair Display,serif;font-size:1.2rem;color:var(--cream);"></div>
+          <div id="wb-extra" style="font-size:.82rem;color:rgba(250,247,242,.45);margin-top:.3rem;font-style:italic;"></div>
+        </div>
+        <div id="wb-slots" style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;min-height:52px;"></div>
+        <div id="wb-letters" style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;"></div>
+        <div style="display:flex;gap:.7rem;justify-content:center;">
+          <button class="prac-btn-sec" onclick="wbClear()">Borrar ✕</button>
+          <button class="prac-btn-gold" onclick="wbCheck()">Comprobar ✓</button>
+          <button class="prac-btn-sec" onclick="loadWB()">Nueva →</button>
+        </div>
+        <div id="wb-feedback" style="text-align:center;font-size:.95rem;min-height:1.4rem;font-style:italic;color:var(--gold);"></div>
+        <div style="text-align:center;font-size:.8rem;color:rgba(250,247,242,.4);">✅ Correctas: <span id="wb-correct">0</span> &nbsp;|&nbsp; ❌ Incorrectas: <span id="wb-wrong">0</span></div>
+      </div>
+    </div>
+
+    <div id="prac-phrases" class="prac-panel">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem;" id="phrases-grid"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">English Blog</div>
+  <p>SENA · English Course 2026<br>
+  Hecho con dedicación y esfuerzo · By Victor Henao <a href="#" onclick="window.scrollTo(0,0);return false;">Volver arriba ↑</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// VARIABLES GLOBALES
+// ─────────────────────────────────────────────────────────────
+let stagedFiles = [];
+let persistedUploads = [];
+
+// ✅ FIX PRINCIPAL: Registro global de URLs indexadas por card ID
+// Evita incrustar base64 gigantes en atributos onclick (causa crash silencioso)
+window._cardUrls = {};
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function () {
+  loadUploads();
+  loadComments();
+  initVerbs();
+  loadWB();
+  startQuiz();
+  renderPhrases();
+  setTimeout(renderFC, 100);
+
+  try {
+    const savedPhoto = localStorage.getItem('profile_photo');
+    if (savedPhoto) {
+      const img = document.getElementById('profilePhoto');
+      img.src = savedPhoto;
+      img.style.display = 'block';
+      document.getElementById('photoPlaceholder').style.display = 'none';
+      document.getElementById('aboutImgBox').onclick = () => openLightbox(savedPhoto);
+    }
+  } catch (e) {}
+});
+
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// ─────────────────────────────────────────────────────────────
+// LIGHTBOX
+// ─────────────────────────────────────────────────────────────
+function openLightbox(src) {
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// ✅ FIX: abre el lightbox usando el registro, sin incrustar base64 en onclick
+function openLightboxById(id) {
+  const src = window._cardUrls[String(id)];
+  if (src) openLightbox(src);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────────────────────────────────────
+// FILE STAGING
+// ─────────────────────────────────────────────────────────────
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length) addToStage(fileInput.files);
+  fileInput.value = '';
+});
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('over');
+  addToStage(e.dataTransfer.files);
+});
+
+function getIcon(file) {
+  const t = file.type;
+  const n = file.name.toLowerCase();
+  if (t.startsWith('image/')) return '🖼️';
+  if (t.startsWith('video/')) return '🎬';
+  if (t.startsWith('audio/')) return '🎵';
+  if (t === 'application/pdf' || n.endsWith('.pdf')) return '📄';
+  if (n.match(/\.docx?$/)) return '📝';
+  if (n.match(/\.pptx?$/)) return '📊';
+  if (n.match(/\.xlsx?$/)) return '📋';
+  return '📎';
+}
+
+function fmtSize(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+  return (b / 1048576).toFixed(1) + ' MB';
+}
+
+function addToStage(files) {
+  Array.from(files).forEach(file => {
+    const id = Date.now() + '_' + Math.random();
+    const url = URL.createObjectURL(file);
+    stagedFiles.push({ id, file, url });
+
+    const wrap = document.createElement('div');
+    wrap.className = 'staged-item';
+    wrap.id = 'stage_' + id;
+
+    let prevHTML = file.type.startsWith('image/')
+      ? `<img class="s-thumb" src="${url}" alt="">`
+      : `<span class="s-icon">${getIcon(file)}</span>`;
+
+    wrap.innerHTML = prevHTML +
+      `<div class="s-info">
+        <div class="s-name">${file.name}</div>
+        <div class="s-size">${fmtSize(file.size)}</div>
+      </div>
+      <button class="s-del" onclick="removeFromStage('${id}')">✕</button>`;
+
+    document.getElementById('stagedList').appendChild(wrap);
+  });
+}
+
+function removeFromStage(id) {
+  stagedFiles = stagedFiles.filter(f => f.id !== id);
+  const el = document.getElementById('stage_' + id);
+  if (el) el.remove();
+}
+
+// ─────────────────────────────────────────────────────────────
+// SUBMIT EVIDENCE — usa blob URL directamente (sin FileReader)
+// ─────────────────────────────────────────────────────────────
+const catLabels = {
+  writing:   '✍️ Writing',
+  speaking:  '🎤 Speaking',
+  reading:   '📖 Reading',
+  listening: '🎧 Listening',
+  grammar:   '📐 Grammar'
+};
+
+function submitEvidence() {
+  const title = document.getElementById('upTitle').value.trim();
+  const cat   = document.getElementById('upCat').value;
+  const unit  = document.getElementById('upUnit').value.trim();
+  const date  = document.getElementById('upDate').value.trim();
+  const desc  = document.getElementById('upDesc').value.trim();
+
+  if (!title)              { showToast('⚠️ Escribe un título para el trabajo'); return; }
+  if (!cat)                { showToast('⚠️ Selecciona una categoría'); return; }
+  if (!stagedFiles.length) { showToast('⚠️ Selecciona al menos un archivo'); return; }
+
+  // ── PASO 1: mostrar tarjetas AL INSTANTE usando blob URL (ya disponible, sin FileReader) ──
+  const snap = stagedFiles.slice();
+  snap.forEach(function(item, index) {
+    var cardId = 'card_' + Date.now() + '_' + index;
+    var data = {
+      id:       cardId,
+      title:    title,
+      cat:      cat,
+      unit:     unit,
+      date:     date,
+      desc:     desc,
+      name:     item.file.name,
+      type:     item.file.type,
+      src:      item.url,   // blob URL — funciona para img/video/audio/pdf INMEDIATAMENTE
+      base64:   null        // se llenará en background si cabe en localStorage
+    };
+    addGalleryCard(data);
+
+    // ── PASO 2: intentar guardar en localStorage en background (no bloquea nada) ──
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      data.base64 = e.target.result;
+      persistedUploads.push(data);
+      try {
+        localStorage.setItem('portfolio_uploads', JSON.stringify(persistedUploads));
+      } catch(storageErr) {
+        persistedUploads = persistedUploads.filter(function(u){ return u.id !== cardId; });
+        console.warn('Archivo muy grande para localStorage, solo disponible esta sesión:', item.file.name);
+      }
+    };
+    reader.onerror = function() {
+      console.warn('FileReader background error (no afecta la galería):', item.file.name);
+    };
+    try { reader.readAsDataURL(item.file); } catch(e) {}
+  });
+
+  // ── PASO 3: limpiar formulario de inmediato ──
+  document.getElementById('upTitle').value = '';
+  document.getElementById('upCat').value   = '';
+  document.getElementById('upUnit').value  = '';
+  document.getElementById('upDate').value  = '';
+  document.getElementById('upDesc').value  = '';
+  document.getElementById('stagedList').innerHTML = '';
+  stagedFiles = [];
+
+  showToast('✅ ¡Evidencia publicada en la galería!');
+  setTimeout(function(){ document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' }); }, 500);
+}
+
+// ─────────────────────────────────────────────────────────────
+// ADD GALLERY CARD
+// ─────────────────────────────────────────────────────────────
+function addGalleryCard(data) {
+  var grid = document.getElementById('galleryGrid');
+  var emptyMsg = document.getElementById('emptyMsg');
+  if (emptyMsg) emptyMsg.remove();
+
+  // src puede ser blob URL (uploads nuevos) o base64 (cargados de localStorage)
+  var src = data.src || data.base64 || '';
+  window._cardUrls[String(data.id)] = src;
+
+  var t      = data.type || '';
+  var n      = (data.name || '').toLowerCase();
+  var isImg  = t.startsWith('image/');
+  var isVid  = t.startsWith('video/');
+  var isAud  = t.startsWith('audio/');
+  var isPDF  = t === 'application/pdf' || n.endsWith('.pdf');
+  var ext    = n.split('.').pop().toUpperCase();
+  var safeId = String(data.id);
+
+  // ── Media preview ──
+  var media = '';
+  if (isImg) {
+    media = '<img class="ucard-img" src="' + src + '" alt="' + data.title + '" ' +
+            'onclick="openLightboxById(\'' + safeId + '\')" title="Haz clic para ampliar">';
+  } else if (isVid) {
+    media = '<video class="ucard-video" controls preload="metadata" style="width:100%;max-height:220px;display:block;background:#000">' +
+            '<source src="' + src + '" type="' + t + '">Tu navegador no soporta este video.</video>';
+  } else if (isAud) {
+    media = '<div class="ucard-audio-box">' +
+            '<div class="audio-wave">🎵</div>' +
+            '<audio controls preload="metadata" style="width:100%">' +
+            '<source src="' + src + '" type="' + t + '">Tu navegador no soporta audio.</audio>' +
+            '</div>';
+  } else if (isPDF) {
+    media = '<div class="ucard-file-box"><div class="file-big-icon">📄</div><div class="file-ext">PDF</div></div>';
+  } else {
+    media = '<div class="ucard-file-box"><div class="file-big-icon">📎</div><div class="file-ext">' + ext + '</div></div>';
+  }
+
+  // ── Botón acción principal ──
+  var actionBtn = '';
+  if (isImg) {
+    actionBtn = '<button class="btn-action btn-view-img" onclick="openLightboxById(\'' + safeId + '\')">🔍 Ampliar</button>';
+  } else if (isPDF) {
+    actionBtn = '<a class="btn-action btn-open" href="' + src + '" target="_blank">📄 Abrir PDF</a>';
+  } else if (isVid) {
+    actionBtn = '<span class="btn-action" style="background:var(--sage);color:#fff;cursor:default;">▶ Video</span>';
+  } else if (isAud) {
+    actionBtn = '<span class="btn-action" style="background:var(--sage);color:#fff;cursor:default;">🎵 Audio</span>';
+  } else {
+    actionBtn = '<a class="btn-action btn-open" href="' + src + '" target="_blank">📎 Abrir</a>';
+  }
+
+  var dateStr = data.date || new Date().toLocaleDateString('es-ES', { year:'numeric', month:'long' });
+  var unitStr = data.unit ? ' · ' + data.unit : '';
+
+  var card = document.createElement('div');
+  card.className = 'ucard';
+  card.setAttribute('data-id', safeId);
+  card.innerHTML = media +
+    '<div class="ucard-body">' +
+      '<span class="ucard-cat">' + (catLabels[data.cat] || data.cat) + '</span>' +
+      '<div class="ucard-title">' + data.title + '</div>' +
+      '<div class="ucard-unit">' + dateStr + unitStr + '</div>' +
+      '<div class="ucard-desc">' + (data.desc || 'Sin descripción.') + '</div>' +
+      '<div class="ucard-actions">' +
+        actionBtn +
+        '<a class="btn-action btn-dl" href="' + src + '" download="' + data.name + '">⬇ Descargar</a>' +
+        '<button class="btn-action btn-del" onclick="deleteUpload(\'' + safeId + '\',this)">🗑</button>' +
+      '</div>' +
+    '</div>';
+
+  grid.appendChild(card);
+}
+
+// ─────────────────────────────────────────────────────────────
+// DELETE UPLOAD
+// ─────────────────────────────────────────────────────────────
+function deleteUpload(id, btn) {
+  if (btn) btn.closest('.ucard').remove();
+  persistedUploads = persistedUploads.filter(u => String(u.id) !== String(id));
+  delete window._cardUrls[String(id)];
+  delete (window._sessionCards||{})[String(id)];
+  try { localStorage.setItem('portfolio_uploads', JSON.stringify(persistedUploads)); } catch(e) {};
+
+  if (document.querySelectorAll('.ucard').length === 0) {
+    const grid = document.getElementById('galleryGrid');
+    const emptyMsg = document.createElement('div');
+    emptyMsg.className = 'empty-gallery';
+    emptyMsg.id = 'emptyMsg';
+    emptyMsg.innerHTML = '<div style="font-size:3rem;margin-bottom:1rem;">📂</div>' +
+      '<div style="font-weight:600;margin-bottom:.5rem;color:#7a6a5a;">Aún no hay evidencias publicadas</div>' +
+      '<div style="font-size:.88rem;">Ve a la sección <strong>Upload</strong> para subir tu primer trabajo.</div>';
+    grid.appendChild(emptyMsg);
+  }
+  showToast('🗑 Archivo eliminado.');
+}
+
+// ─────────────────────────────────────────────────────────────
+// STORAGE
+// ─────────────────────────────────────────────────────────────
+function saveUploads() {
+  try {
+    localStorage.setItem('portfolio_uploads', JSON.stringify(persistedUploads));
+  } catch (e) {
+    // localStorage lleno (archivos muy grandes) — la galería igual se muestra en esta sesión
+    console.warn('localStorage lleno. Los datos se perderán al cerrar el navegador:', e.message);
+    showToast('⚠️ Archivo muy grande para guardar permanentemente (se muestra en esta sesión)');
+  }
+}
+
+function loadUploads() {
+  try {
+    const data = JSON.parse(localStorage.getItem('portfolio_uploads') || '[]');
+    persistedUploads = data;
+    if (data.length > 0) {
+      const emptyMsg = document.getElementById('emptyMsg');
+      if (emptyMsg) emptyMsg.remove();
+    }
+    data.forEach(item => addGalleryCard(item));
+  } catch (e) {
+    console.warn('Error al cargar uploads:', e);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// COMMENTS
+// ─────────────────────────────────────────────────────────────
+function addComment() {
+  const name = document.getElementById('cmtName').value.trim();
+  const text = document.getElementById('cmtText').value.trim();
+  if (!name) { showToast('⚠️ Por favor escribe tu nombre'); return; }
+  if (!text) { showToast('⚠️ Por favor escribe un comentario'); return; }
+
+  const colors = [
+    'linear-gradient(135deg,#c8732a,#d4a843)',
+    'linear-gradient(135deg,#7a8c6e,#4a6a4a)',
+    'linear-gradient(135deg,#4a6a8c,#2a4a7a)',
+    'linear-gradient(135deg,#8c4a6a,#6a2a4a)',
+    'linear-gradient(135deg,#6a4a8c,#4a2a7a)'
+  ];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const today = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const commentDiv = document.createElement('div');
+  commentDiv.className = 'cmt';
+  commentDiv.innerHTML = `
+    <div class="cmt-avatar" style="background:${color}">${name[0].toUpperCase()}</div>
+    <div style="flex:1">
+      <div class="cmt-author">${name}</div>
+      <div class="cmt-date">${today}</div>
+      <p class="cmt-text">${text}</p>
+    </div>`;
+  document.getElementById('commentList').appendChild(commentDiv);
+
+  try {
+    const comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
+    comments.push({ name, text, date: today, color });
+    localStorage.setItem('portfolio_comments', JSON.stringify(comments));
+  } catch (e) {}
+
+  document.getElementById('cmtName').value = '';
+  document.getElementById('cmtEmail').value = '';
+  document.getElementById('cmtText').value = '';
+  showToast('💬 ¡Comentario publicado!');
+}
+
+function loadComments() {
+  try {
+    const comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
+    const list = document.getElementById('commentList');
+    comments.forEach(c => {
+      const commentDiv = document.createElement('div');
+      commentDiv.className = 'cmt';
+      commentDiv.innerHTML = `
+        <div class="cmt-avatar" style="background:${c.color}">${c.name[0].toUpperCase()}</div>
+        <div style="flex:1">
+          <div class="cmt-author">${c.name}</div>
+          <div class="cmt-date">${c.date}</div>
+          <p class="cmt-text">${c.text}</p>
+        </div>`;
+      list.appendChild(commentDiv);
+    });
+  } catch (e) {}
+}
+
+// ─────────────────────────────────────────────────────────────
+// PROFILE PHOTO
+// ─────────────────────────────────────────────────────────────
+function loadProfilePhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const url = e.target.result;
+    const img = document.getElementById('profilePhoto');
+    img.src = url;
+    img.style.display = 'block';
+    document.getElementById('photoPlaceholder').style.display = 'none';
+    document.getElementById('aboutImgBox').onclick = () => openLightbox(url);
+    try { localStorage.setItem('profile_photo', url); } catch (e) {}
+    showToast('📷 ¡Foto guardada!');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ─────────────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ─────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────
+const FLASHCARDS = [
+  {w:'Apple',t:'Manzana',e:'I eat an apple every day.',ph:'/ˈæp.əl/',cat:'food',emoji:'🍎'},
+  {w:'Dog',t:'Perro',e:'The dog is barking loudly.',ph:'/dɒɡ/',cat:'animals',emoji:'🐶'},
+  {w:'Happy',t:'Feliz',e:'She is very happy today.',ph:'/ˈhæp.i/',cat:'emotions',emoji:'😊'},
+  {w:'Airport',t:'Aeropuerto',e:'We arrived at the airport early.',ph:'/ˈeə.pɔːt/',cat:'travel',emoji:'✈️'},
+  {w:'Heart',t:'Corazón',e:'My heart beats fast.',ph:'/hɑːt/',cat:'body',emoji:'❤️'},
+  {w:'Blue',t:'Azul',e:'The sky is blue.',ph:'/bluː/',cat:'colors',emoji:'💙'},
+  {w:'Banana',t:'Banana',e:'Monkeys love bananas.',ph:'/bəˈnɑː.nə/',cat:'food',emoji:'🍌'},
+  {w:'Cat',t:'Gato',e:'The cat sleeps all day.',ph:'/kæt/',cat:'animals',emoji:'🐱'},
+  {w:'Sad',t:'Triste',e:'He felt sad after the movie.',ph:'/sæd/',cat:'emotions',emoji:'😢'},
+  {w:'Hotel',t:'Hotel',e:'We stayed at a beautiful hotel.',ph:'/həʊˈtel/',cat:'travel',emoji:'🏨'},
+  {w:'Hand',t:'Mano',e:'Raise your hand if you know.',ph:'/hænd/',cat:'body',emoji:'✋'},
+  {w:'Red',t:'Rojo',e:'The rose is red.',ph:'/red/',cat:'colors',emoji:'🔴'},
+  {w:'Orange',t:'Naranja',e:'I drink orange juice for breakfast.',ph:'/ˈɒr.ɪndʒ/',cat:'food',emoji:'🍊'},
+  {w:'Lion',t:'León',e:'The lion roared in the jungle.',ph:'/ˈlaɪ.ən/',cat:'animals',emoji:'🦁'},
+  {w:'Angry',t:'Enojado',e:'Why are you angry at me?',ph:'/ˈæŋ.ɡri/',cat:'emotions',emoji:'😠'},
+  {w:'Passport',t:'Pasaporte',e:'Do not forget your passport.',ph:'/ˈpɑːs.pɔːt/',cat:'travel',emoji:'🛂'},
+  {w:'Eye',t:'Ojo',e:'She has beautiful brown eyes.',ph:'/aɪ/',cat:'body',emoji:'👁️'},
+  {w:'Green',t:'Verde',e:'The grass is green.',ph:'/ɡriːn/',cat:'colors',emoji:'💚'},
+  {w:'Strawberry',t:'Fresa',e:'Strawberry is my favorite flavor.',ph:'/ˈstrɔː.bər.i/',cat:'food',emoji:'🍓'},
+  {w:'Elephant',t:'Elefante',e:'Elephants never forget.',ph:'/ˈel.ɪ.fənt/',cat:'animals',emoji:'🐘'},
+  {w:'Excited',t:'Emocionado',e:'I am excited for the trip!',ph:'/ɪkˈsaɪ.tɪd/',cat:'emotions',emoji:'🤩'},
+  {w:'Ticket',t:'Boleto',e:'Buy a ticket to enter.',ph:'/ˈtɪk.ɪt/',cat:'travel',emoji:'🎟️'},
+  {w:'Nose',t:'Nariz',e:'She has a tiny nose.',ph:'/nəʊz/',cat:'body',emoji:'👃'},
+  {w:'Yellow',t:'Amarillo',e:'The sun is yellow.',ph:'/ˈjel.əʊ/',cat:'colors',emoji:'💛'},
+];
+
+const VERBS = [
+  {v:'be',es:'ser/estar',tenses:[
+    {name:'Present Simple',rows:[['I','am'],['You','are'],['He/She/It','is'],['We','are'],['You (pl.)','are'],['They','are']]},
+    {name:'Past Simple',rows:[['I','was'],['You','were'],['He/She/It','was'],['We','were'],['You (pl.)','were'],['They','were']]},
+    {name:'Future (will)',rows:[['I','will be'],['You','will be'],['He/She/It','will be'],['We','will be'],['You (pl.)','will be'],['They','will be']]},
+    {name:'Present Perfect',rows:[['I','have been'],['You','have been'],['He/She/It','has been'],['We','have been'],['You (pl.)','have been'],['They','have been']]},
+  ]},
+  {v:'have',es:'tener',tenses:[
+    {name:'Present Simple',rows:[['I','have'],['You','have'],['He/She/It','has'],['We','have'],['You (pl.)','have'],['They','have']]},
+    {name:'Past Simple',rows:[['I','had'],['You','had'],['He/She/It','had'],['We','had'],['You (pl.)','had'],['They','had']]},
+    {name:'Future (will)',rows:[['I','will have'],['You','will have'],['He/She/It','will have'],['We','will have'],['You (pl.)','will have'],['They','will have']]},
+    {name:'Present Perfect',rows:[['I','have had'],['You','have had'],['He/She/It','has had'],['We','have had'],['You (pl.)','have had'],['They','have had']]},
+  ]},
+  {v:'go',es:'ir',tenses:[
+    {name:'Present Simple',rows:[['I','go'],['You','go'],['He/She/It','goes'],['We','go'],['You (pl.)','go'],['They','go']]},
+    {name:'Past Simple',rows:[['I','went'],['You','went'],['He/She/It','went'],['We','went'],['You (pl.)','went'],['They','went']]},
+    {name:'Future (will)',rows:[['I','will go'],['You','will go'],['He/She/It','will go'],['We','will go'],['You (pl.)','will go'],['They','will go']]},
+    {name:'Present Perfect',rows:[['I','have gone'],['You','have gone'],['He/She/It','has gone'],['We','have gone'],['You (pl.)','have gone'],['They','have gone']]},
+  ]},
+  {v:'do',es:'hacer',tenses:[
+    {name:'Present Simple',rows:[['I','do'],['You','do'],['He/She/It','does'],['We','do'],['You (pl.)','do'],['They','do']]},
+    {name:'Past Simple',rows:[['I','did'],['You','did'],['He/She/It','did'],['We','did'],['You (pl.)','did'],['They','did']]},
+    {name:'Future (will)',rows:[['I','will do'],['You','will do'],['He/She/It','will do'],['We','will do'],['You (pl.)','will do'],['They','will do']]},
+    {name:'Present Perfect',rows:[['I','have done'],['You','have done'],['He/She/It','has done'],['We','have done'],['You (pl.)','have done'],['They','have done']]},
+  ]},
+  {v:'make',es:'hacer/crear',tenses:[
+    {name:'Present Simple',rows:[['I','make'],['You','make'],['He/She/It','makes'],['We','make'],['You (pl.)','make'],['They','make']]},
+    {name:'Past Simple',rows:[['I','made'],['You','made'],['He/She/It','made'],['We','made'],['You (pl.)','made'],['They','made']]},
+    {name:'Future (will)',rows:[['I','will make'],['You','will make'],['He/She/It','will make'],['We','will make'],['You (pl.)','will make'],['They','will make']]},
+    {name:'Present Perfect',rows:[['I','have made'],['You','have made'],['He/She/It','has made'],['We','have made'],['You (pl.)','have made'],['They','have made']]},
+  ]},
+  {v:'speak',es:'hablar',tenses:[
+    {name:'Present Simple',rows:[['I','speak'],['You','speak'],['He/She/It','speaks'],['We','speak'],['You (pl.)','speak'],['They','speak']]},
+    {name:'Past Simple',rows:[['I','spoke'],['You','spoke'],['He/She/It','spoke'],['We','spoke'],['You (pl.)','spoke'],['They','spoke']]},
+    {name:'Future (will)',rows:[['I','will speak'],['You','will speak'],['He/She/It','will speak'],['We','will speak'],['You (pl.)','will speak'],['They','will speak']]},
+    {name:'Present Perfect',rows:[['I','have spoken'],['You','have spoken'],['He/She/It','has spoken'],['We','have spoken'],['You (pl.)','have spoken'],['They','have spoken']]},
+  ]},
+  {v:'write',es:'escribir',tenses:[
+    {name:'Present Simple',rows:[['I','write'],['You','write'],['He/She/It','writes'],['We','write'],['You (pl.)','write'],['They','write']]},
+    {name:'Past Simple',rows:[['I','wrote'],['You','wrote'],['He/She/It','wrote'],['We','wrote'],['You (pl.)','wrote'],['They','wrote']]},
+    {name:'Future (will)',rows:[['I','will write'],['You','will write'],['He/She/It','will write'],['We','will write'],['You (pl.)','will write'],['They','will write']]},
+    {name:'Present Perfect',rows:[['I','have written'],['You','have written'],['He/She/It','has written'],['We','have written'],['You (pl.)','have written'],['They','have written']]},
+  ]},
+  {v:'eat',es:'comer',tenses:[
+    {name:'Present Simple',rows:[['I','eat'],['You','eat'],['He/She/It','eats'],['We','eat'],['You (pl.)','eat'],['They','eat']]},
+    {name:'Past Simple',rows:[['I','ate'],['You','ate'],['He/She/It','ate'],['We','ate'],['You (pl.)','ate'],['They','ate']]},
+    {name:'Future (will)',rows:[['I','will eat'],['You','will eat'],['He/She/It','will eat'],['We','will eat'],['You (pl.)','will eat'],['They','will eat']]},
+    {name:'Present Perfect',rows:[['I','have eaten'],['You','have eaten'],['He/She/It','has eaten'],['We','have eaten'],['You (pl.)','have eaten'],['They','have eaten']]},
+  ]},
+  {v:'study',es:'estudiar',tenses:[
+    {name:'Present Simple',rows:[['I','study'],['You','study'],['He/She/It','studies'],['We','study'],['You (pl.)','study'],['They','study']]},
+    {name:'Past Simple',rows:[['I','studied'],['You','studied'],['He/She/It','studied'],['We','studied'],['You (pl.)','studied'],['They','studied']]},
+    {name:'Future (will)',rows:[['I','will study'],['You','will study'],['He/She/It','will study'],['We','will study'],['You (pl.)','will study'],['They','will study']]},
+    {name:'Present Perfect',rows:[['I','have studied'],['You','have studied'],['He/She/It','has studied'],['We','have studied'],['You (pl.)','have studied'],['They','have studied']]},
+  ]},
+  {v:'know',es:'saber/conocer',tenses:[
+    {name:'Present Simple',rows:[['I','know'],['You','know'],['He/She/It','knows'],['We','know'],['You (pl.)','know'],['They','know']]},
+    {name:'Past Simple',rows:[['I','knew'],['You','knew'],['He/She/It','knew'],['We','knew'],['You (pl.)','knew'],['They','knew']]},
+    {name:'Future (will)',rows:[['I','will know'],['You','will know'],['He/She/It','will know'],['We','will know'],['You (pl.)','will know'],['They','will know']]},
+    {name:'Present Perfect',rows:[['I','have known'],['You','have known'],['He/She/It','has known'],['We','have known'],['You (pl.)','have known'],['They','have known']]},
+  ]},
+];
+
+const PHRASES = [
+  {en:'How are you?',es:'¿Cómo estás?',cat:'Greetings'},
+  {en:'Nice to meet you.',es:'Mucho gusto.',cat:'Greetings'},
+  {en:'See you later!',es:'¡Hasta luego!',cat:'Greetings'},
+  {en:'Could you repeat that?',es:'¿Podrías repetir eso?',cat:'Classroom'},
+  {en:"I don't understand.",es:'No entiendo.',cat:'Classroom'},
+  {en:'How do you say ___ in English?',es:'¿Cómo se dice ___ en inglés?',cat:'Classroom'},
+  {en:'What time is it?',es:'¿Qué hora es?',cat:'Daily Life'},
+  {en:'Where is the bathroom?',es:'¿Dónde está el baño?',cat:'Daily Life'},
+  {en:'How much does it cost?',es:'¿Cuánto cuesta?',cat:'Daily Life'},
+  {en:'Can I help you?',es:'¿Puedo ayudarte?',cat:'Social'},
+  {en:'I agree with you.',es:'Estoy de acuerdo contigo.',cat:'Social'},
+  {en:'That is a great idea!',es:'¡Esa es una gran idea!',cat:'Social'},
+  {en:'I am sorry, I made a mistake.',es:'Lo siento, cometí un error.',cat:'Social'},
+  {en:'Let me think about it.',es:'Déjame pensarlo.',cat:'Academic'},
+  {en:'In my opinion...',es:'En mi opinión...',cat:'Academic'},
+  {en:'On the other hand...',es:'Por otro lado...',cat:'Academic'},
+  {en:'To sum up...',es:'Para resumir...',cat:'Academic'},
+  {en:'For example...',es:'Por ejemplo...',cat:'Academic'},
+  {en:'Could you speak more slowly?',es:'¿Podrías hablar más despacio?',cat:'Classroom'},
+  {en:'I would like to...',es:'Me gustaría...',cat:'Daily Life'},
+  {en:'What do you think?',es:'¿Qué piensas?',cat:'Social'},
+  {en:'It was a pleasure.',es:'Fue un placer.',cat:'Greetings'},
+];
+
+const WORD_BUILDER = [
+  {w:'APPLE',es:'Manzana',emoji:'🍎',hint:'Una fruta roja o verde'},
+  {w:'HAPPY',es:'Feliz',emoji:'😊',hint:'Emoción positiva'},
+  {w:'SCHOOL',es:'Escuela',emoji:'🏫',hint:'Lugar donde estudias'},
+  {w:'WATER',es:'Agua',emoji:'💧',hint:'Líquido esencial para vivir'},
+  {w:'FRIEND',es:'Amigo',emoji:'👫',hint:'Persona cercana a ti'},
+  {w:'MUSIC',es:'Música',emoji:'🎵',hint:'Arte de los sonidos'},
+  {w:'HOUSE',es:'Casa',emoji:'🏠',hint:'Donde vives'},
+  {w:'BOOK',es:'Libro',emoji:'📚',hint:'Lo que lees para aprender'},
+  {w:'DREAM',es:'Sueño',emoji:'💭',hint:'Lo que imaginas dormido o despierto'},
+  {w:'FLOWER',es:'Flor',emoji:'🌸',hint:'Parte colorida de una planta'},
+  {w:'STARS',es:'Estrellas',emoji:'⭐',hint:'Brillan en el cielo de noche'},
+  {w:'HEART',es:'Corazón',emoji:'❤️',hint:'Símbolo del amor'},
+  {w:'OCEAN',es:'Océano',emoji:'🌊',hint:'Gran masa de agua salada'},
+  {w:'BREAD',es:'Pan',emoji:'🍞',hint:'Alimento hecho de trigo'},
+  {w:'CLOCK',es:'Reloj',emoji:'⏰',hint:'Marca las horas del día'},
+];
+
+// ─────────────────────────────────────────────────────────────
+// FLASHCARDS
+// ─────────────────────────────────────────────────────────────
+let fcCat = 'all', fcIdx = 0, fcFlipped = false, fcFiltered = FLASHCARDS;
+
+function setFCcat(cat, btn) {
+  fcCat = cat; fcIdx = 0;
+  document.querySelectorAll('.fc-cat').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFC();
+}
+
+function renderFC() {
+  fcFiltered = fcCat === 'all' ? FLASHCARDS : FLASHCARDS.filter(c => c.cat === fcCat);
+  if (!fcFiltered.length) return;
+  if (fcIdx >= fcFiltered.length) fcIdx = 0;
+  const c = fcFiltered[fcIdx];
+  document.getElementById('fc-emoji').textContent = c.emoji;
+  document.getElementById('fc-word').textContent = c.w;
+  document.getElementById('fc-translation').textContent = c.t;
+  document.getElementById('fc-example').textContent = '"' + c.e + '"';
+  document.getElementById('fc-phonetic').textContent = c.ph;
+  fcFlipped = false;
+  document.getElementById('fc-inner').style.transform = 'rotateY(0deg)';
+  const pct = ((fcIdx + 1) / fcFiltered.length * 100).toFixed(0);
+  document.getElementById('fc-prog').style.width = pct + '%';
+  document.getElementById('fc-counter').textContent = (fcIdx + 1) + ' / ' + fcFiltered.length;
+}
+
+function flipFC() {
+  fcFlipped = !fcFlipped;
+  document.getElementById('fc-inner').style.transform = fcFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+}
+
+function fcNav(dir) {
+  fcIdx = (fcIdx + dir + fcFiltered.length) % fcFiltered.length;
+  renderFC();
+}
+
+function speakWord() {
+  const word = fcFiltered[fcIdx]?.w;
+  if (!word) return;
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.9;
+  window.speechSynthesis.speak(u);
+}
+
+// ─────────────────────────────────────────────────────────────
+// VERBS
+// ─────────────────────────────────────────────────────────────
+function initVerbs() {
+  const list = document.getElementById('verbList');
+  if (!list) return;
+  list.innerHTML = '';
+  VERBS.forEach(v => {
+    const btn = document.createElement('button');
+    btn.className = 'verb-chip';
+    btn.textContent = v.v;
+    btn.onclick = () => showVerb(v, btn);
+    list.appendChild(btn);
+  });
+}
+
+function showVerb(vb, btn) {
+  document.querySelectorAll('.verb-chip').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const box = document.getElementById('verb-table-box');
+  box.style.display = 'block';
+  document.getElementById('vt-title').textContent = vb.v.charAt(0).toUpperCase() + vb.v.slice(1);
+  document.getElementById('vt-meaning').textContent = 'Significado en español: ' + vb.es;
+  const body = document.getElementById('vt-body');
+  body.innerHTML = '';
+  vb.tenses.forEach(t => {
+    const block = document.createElement('div');
+    block.className = 'tense-block';
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'tense-name';
+    nameDiv.textContent = t.name;
+    block.appendChild(nameDiv);
+    const grid = document.createElement('div');
+    grid.className = 'conj-grid';
+    t.rows.forEach(([pro, form]) => {
+      const row = document.createElement('div');
+      row.className = 'conj-row';
+      row.innerHTML = `<span class="conj-pro">${pro}</span><span class="conj-form">${form}</span>`;
+      grid.appendChild(row);
+    });
+    block.appendChild(grid);
+    body.appendChild(block);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// QUIZ
+// ─────────────────────────────────────────────────────────────
+let quizBank=[], quizIdx=0, quizScore=0, quizLives=3, quizCat='mixed', quizAnswered=false;
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+function getRandTranslations(exclude, n) {
+  return shuffle(FLASHCARDS.map(c => c.t).filter(t => t !== exclude)).slice(0, n);
+}
+function getRandWords(exclude, n) {
+  return shuffle(FLASHCARDS.map(c => c.w).filter(w => w !== exclude)).slice(0, n);
+}
+
+function buildQuizBank(cat) {
+  let bank = [];
+  FLASHCARDS.forEach(c => {
+    bank.push({type:'vocab',q:'What is the Spanish word for: "'+c.w+'"?',opts:shuffle([c.t,...getRandTranslations(c.t,3)]),correct:c.t,cat:'vocab'});
+    bank.push({type:'vocab',q:'¿Cuál es la traducción al inglés de: "'+c.t+'"?',opts:shuffle([c.w,...getRandWords(c.w,3)]),correct:c.w,cat:'vocab'});
+  });
+  VERBS.forEach(vb => {
+    vb.tenses.forEach(t => {
+      t.rows.forEach(([pro, form]) => {
+        const others = t.rows.filter(r => r[0] !== pro).map(r => r[1]).filter((v,i,a) => a.indexOf(v)===i);
+        if (others.length >= 3) {
+          bank.push({type:'verb',q:'Complete: "'+pro+' ___ ('+vb.v+')" — '+t.name,opts:shuffle([form,...shuffle(others).slice(0,3)]),correct:form,cat:'verbs'});
+        }
+      });
+    });
+  });
+  if (cat === 'vocab') bank = bank.filter(q => q.cat === 'vocab');
+  else if (cat === 'verbs') bank = bank.filter(q => q.cat === 'verbs');
+  return shuffle(bank).slice(0, 15);
+}
+
+function setQuizCat(cat, btn) {
+  quizCat = cat;
+  document.querySelectorAll('.qcat').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  startQuiz();
+}
+
+function startQuiz() {
+  quizBank = buildQuizBank(quizCat);
+  quizIdx = 0; quizScore = 0; quizLives = 3; quizAnswered = false;
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-q-box').style.display = '';
+  document.getElementById('quiz-opts').style.display = '';
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  updateQuizHUD();
+  renderQuizQ();
+}
+
+function updateQuizHUD() {
+  document.getElementById('quiz-score-disp').textContent = 'Score: ' + quizScore;
+  document.getElementById('quiz-lives-disp').textContent = '❤️'.repeat(quizLives) + '🖤'.repeat(3 - quizLives);
+}
+
+function renderQuizQ() {
+  if (quizIdx >= quizBank.length || quizLives <= 0) { endQuiz(); return; }
+  const q = quizBank[quizIdx];
+  document.getElementById('quiz-type-label').textContent = q.type === 'verb' ? '🔤 Conjugación' : '📖 Vocabulario';
+  document.getElementById('quiz-q').textContent = q.q;
+  document.getElementById('quiz-feedback').textContent = '';
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  const opts = document.getElementById('quiz-opts');
+  opts.innerHTML = '';
+  q.opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuiz(opt, btn, q);
+    opts.appendChild(btn);
+  });
+  quizAnswered = false;
+}
+
+function answerQuiz(chosen, btn, q) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const correct = chosen === q.correct;
+  document.querySelectorAll('.quiz-opt').forEach(b => {
+    b.classList.add('disabled');
+    if (b.textContent === q.correct) b.classList.add('correct');
+  });
+  if (correct) { btn.classList.add('correct'); quizScore++; document.getElementById('quiz-feedback').textContent = '✅ ¡Correcto!'; }
+  else { btn.classList.add('wrong'); quizLives--; document.getElementById('quiz-feedback').textContent = '❌ Incorrecto. La respuesta era: ' + q.correct; }
+  updateQuizHUD();
+  if (quizLives <= 0) { setTimeout(endQuiz, 1200); return; }
+  document.getElementById('quiz-next-btn').style.display = 'block';
+}
+
+function nextQuizQ() { quizIdx++; renderQuizQ(); }
+
+function endQuiz() {
+  document.getElementById('quiz-q-box').style.display = 'none';
+  document.getElementById('quiz-opts').innerHTML = '';
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  document.getElementById('quiz-feedback').textContent = '';
+  const pct = Math.round(quizScore / quizBank.length * 100);
+  let emoji = '🏆', title = '¡Excelente!';
+  if (pct >= 80) { emoji='🏆'; title='¡Excelente!'; }
+  else if (pct >= 60) { emoji='👍'; title='¡Bien hecho!'; }
+  else if (pct >= 40) { emoji='📚'; title='Sigue practicando'; }
+  else { emoji='💪'; title='¡No te rindas!'; }
+  document.getElementById('qr-emoji').textContent = emoji;
+  document.getElementById('qr-title').textContent = title;
+  document.getElementById('qr-sub').textContent = 'Obtuviste '+quizScore+' de '+quizBank.length+' respuestas correctas ('+pct+'%)';
+  document.getElementById('quiz-result').style.display = 'block';
+}
+
+// ─────────────────────────────────────────────────────────────
+// WORD BUILDER
+// ─────────────────────────────────────────────────────────────
+let wbCurrent=null, wbSelected=[], wbCorrect=0, wbWrong=0;
+
+function loadWB() {
+  const item = WORD_BUILDER[Math.floor(Math.random() * WORD_BUILDER.length)];
+  wbCurrent = item; wbSelected = [];
+  document.getElementById('wb-emoji').textContent = item.emoji;
+  document.getElementById('wb-hint').textContent = 'Pista: ' + item.hint;
+  document.getElementById('wb-extra').textContent = 'Español: ' + item.es;
+  document.getElementById('wb-feedback').textContent = '';
+  const slots = document.getElementById('wb-slots');
+  slots.innerHTML = '';
+  for (let i = 0; i < item.w.length; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'wb-slot'; slot.id = 'slot-' + i;
+    slot.onclick = () => wbRemoveLetter(i);
+    slots.appendChild(slot);
+  }
+  const letters = shuffle([...item.w]);
+  const lBox = document.getElementById('wb-letters');
+  lBox.innerHTML = '';
+  letters.forEach((l, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'wb-letter-btn'; btn.textContent = l; btn.id = 'wbl-' + i;
+    btn.onclick = () => wbAddLetter(l, i, btn);
+    lBox.appendChild(btn);
+  });
+}
+
+function wbAddLetter(letter, btnIdx, btn) {
+  const nextSlot = wbSelected.length;
+  if (nextSlot >= wbCurrent.w.length) return;
+  wbSelected.push({ letter, btnIdx });
+  btn.classList.add('used');
+  const slot = document.getElementById('slot-' + nextSlot);
+  slot.textContent = letter; slot.classList.add('filled');
+  document.getElementById('wb-feedback').textContent = '';
+}
+
+function wbRemoveLetter(slotIdx) {
+  if (slotIdx >= wbSelected.length) return;
+  for (let i = slotIdx; i < wbSelected.length; i++) {
+    document.getElementById('wbl-' + wbSelected[i].btnIdx).classList.remove('used');
+    const slot = document.getElementById('slot-' + i);
+    slot.textContent = ''; slot.className = 'wb-slot';
+  }
+  wbSelected = wbSelected.slice(0, slotIdx);
+}
+
+function wbCheck() {
+  if (!wbCurrent || wbSelected.length < wbCurrent.w.length) {
+    document.getElementById('wb-feedback').textContent = '⚠️ Completa todas las letras primero'; return;
+  }
+  const answer = wbSelected.map(s => s.letter).join('');
+  if (answer === wbCurrent.w) {
+    wbCorrect++; document.getElementById('wb-correct').textContent = wbCorrect;
+    document.getElementById('wb-feedback').textContent = '✅ ¡Correcto! La palabra es: ' + wbCurrent.w;
+    document.querySelectorAll('.wb-slot').forEach(s => { s.classList.add('correct-slot'); s.classList.remove('filled'); });
+    setTimeout(loadWB, 1400);
+  } else {
+    wbWrong++; document.getElementById('wb-wrong').textContent = wbWrong;
+    document.getElementById('wb-feedback').textContent = '❌ Incorrecto. Era: ' + wbCurrent.w;
+    document.querySelectorAll('.wb-slot').forEach(s => { s.classList.add('wrong-slot'); s.classList.remove('filled'); });
+    setTimeout(() => { wbSelected = []; loadWB(); }, 1600);
+  }
+}
+
+function wbClear() {
+  if (!wbCurrent) return;
+  wbSelected = [];
+  for (let i = 0; i < wbCurrent.w.length; i++) {
+    const slot = document.getElementById('slot-' + i);
+    if (slot) { slot.textContent = ''; slot.className = 'wb-slot'; }
+  }
+  document.querySelectorAll('.wb-letter-btn').forEach(b => b.classList.remove('used'));
+  document.getElementById('wb-feedback').textContent = '';
+}
+
+// ─────────────────────────────────────────────────────────────
+// PHRASES
+// ─────────────────────────────────────────────────────────────
+function renderPhrases() {
+  const grid = document.getElementById('phrases-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  PHRASES.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'phrase-card';
+    const btnId = 'psb-' + i;
+    card.innerHTML = `
+      <div class="phrase-en">${p.en}</div>
+      <div class="phrase-es">${p.es}</div>
+      <div class="phrase-cat">${p.cat}</div>
+      <button class="phrase-speak-btn" id="${btnId}">🔊 Escuchar</button>`;
+    grid.appendChild(card);
+    document.getElementById(btnId).addEventListener('click', function () {
+      const u = new SpeechSynthesisUtterance(p.en);
+      u.lang = 'en-US'; window.speechSynthesis.speak(u);
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// TAB SWITCHER
+// ─────────────────────────────────────────────────────────────
+function showPrac(panel, btn) {
+  document.querySelectorAll('.prac-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  document.getElementById('prac-' + panel).classList.add('active');
+  btn.classList.add('active');
+  if (panel === 'phrases') renderPhrases();
+  if (panel === 'quiz') startQuiz();
+  if (panel === 'wordbuilder' && !wbCurrent) loadWB();
+}
+</script>
+</body>
+</html>
