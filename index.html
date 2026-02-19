@@ -1366,4 +1366,12 @@ function renderPhrases(){var grid=document.getElementById('phrases-grid');if(!gr
 function showPrac(panel,btn){document.querySelectorAll('.prac-panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.ptab').forEach(function(b){b.classList.remove('active');});document.getElementById('prac-'+panel).classList.add('active');btn.classList.add('active');if(panel==='phrases')renderPhrases();if(panel==='quiz')startQuiz();if(panel==='wordbuilder'&&!wbCurrent)loadWB();}
 </script>
 </body>
+<script src="https://utteranc.es/client.js"
+        repo="Victor881015/my-blog.git"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
 </html>
