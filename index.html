@@ -1068,7 +1068,6 @@ function loadComments() {
     list.innerHTML = ''; // limpiar antes
 
     comments.forEach(function(c) {
-      // Asegurarse que tenga "time"
       if (!c.time) c.time = new Date().getTime();
 
       var div = document.createElement('div');
@@ -1078,6 +1077,10 @@ function loadComments() {
         '<div style="flex:1"><div class="cmt-author">' + escHtml(c.name) + '</div>' +
         '<div class="cmt-date">' + timeAgo(c.time) + '</div>' +
         '<p class="cmt-text">' + escHtml(c.text) + '</p></div>';
+
+      // Añadir botones de reacción
+      div.appendChild(createReactions(c));
+
       list.appendChild(div);
     });
   } catch(e) {}
@@ -1103,6 +1106,37 @@ function timeAgo(timestamp) {
   var years = Math.floor(months / 12);
   return "Publicado hace " + years + (years === 1 ? " año" : " años");
 }
+
+function createReactions(comment) {
+  var reactions = comment.reactions || { like: 0, love: 0, wow: 0 };
+  var container = document.createElement('div');
+  container.className = 'cmt-reactions';
+
+  ['like','love','wow'].forEach(function(type){
+    var btn = document.createElement('button');
+    btn.className = 'reaction-btn';
+    var emoji = type === 'like' ? '👍' : type === 'love' ? '❤️' : '😲';
+    btn.innerHTML = emoji + ' ' + reactions[type];
+    btn.addEventListener('click', function(){
+      reactions[type]++;
+      btn.innerHTML = emoji + ' ' + reactions[type];
+      comment.reactions = reactions;
+      saveComments(); // actualizar localStorage
+    });
+    container.appendChild(btn);
+  });
+
+  return container;
+}
+
+function saveComments() {
+  try {
+    var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
+    localStorage.setItem('portfolio_comments', JSON.stringify(comments));
+  } catch(e) {}
+}
+
+
 
 setInterval(function() {
   var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
