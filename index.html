@@ -1027,20 +1027,31 @@ function addComment() {
 
   var colors = ['linear-gradient(135deg,#c8732a,#d4a843)','linear-gradient(135deg,#7a8c6e,#4a6a4a)','linear-gradient(135deg,#4a6a8c,#2a4a7a)','linear-gradient(135deg,#8c4a6a,#6a2a4a)','linear-gradient(135deg,#6a4a8c,#4a2a7a)'];
   var color = colors[Math.floor(Math.random() * colors.length)];
-  var today = new Date().toLocaleDateString('es-ES', { year:'numeric', month:'long', day:'numeric' });
+  var now = new Date();
+var timestamp = now.getTime(); // milisegundos exactos
+
+
+
 
   var commentDiv = document.createElement('div');
   commentDiv.className = 'cmt';
   commentDiv.innerHTML =
     '<div class="cmt-avatar" style="background:' + color + '">' + escHtml(name[0].toUpperCase()) + '</div>' +
     '<div style="flex:1"><div class="cmt-author">' + escHtml(name) + '</div>' +
-    '<div class="cmt-date">' + today + '</div>' +
+    '<div class="cmt-date">' + escHtml(c.date) + '</div>' +
     '<p class="cmt-text">' + escHtml(text) + '</p></div>';
   document.getElementById('commentList').appendChild(commentDiv);
 
   try {
     var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
-    comments.push({ name:name, text:text, date:today, color:color });
+   comments.push({ 
+  name: name, 
+  text: text, 
+  time: timestamp, 
+  color: color 
+});
+
+
     localStorage.setItem('portfolio_comments', JSON.stringify(comments));
   } catch(e) {}
 
@@ -1066,6 +1077,45 @@ function loadComments() {
     });
   } catch(e) {}
 }
+
+function timeAgo(timestamp) {
+  var seconds = Math.floor((Date.now() - timestamp) / 1000);
+
+  if (seconds < 60) return "Publicado hace " + seconds + " segundos";
+
+  var minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return "Publicado hace " + minutes + (minutes === 1 ? " minuto" : " minutos");
+
+  var hours = Math.floor(minutes / 60);
+  if (hours < 24) return "Publicado hace " + hours + (hours === 1 ? " hora" : " horas");
+
+  var days = Math.floor(hours / 24);
+  if (days < 30) return "Publicado hace " + days + (days === 1 ? " día" : " días");
+
+  var months = Math.floor(days / 30);
+  if (months < 12) return "Publicado hace " + months + (months === 1 ? " mes" : " meses");
+
+  var years = Math.floor(months / 12);
+  return "Publicado hace " + years + (years === 1 ? " año" : " años");
+}
+
+setInterval(function() {
+  var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
+  var list = document.getElementById('commentList');
+  list.innerHTML = '';
+  comments.forEach(function(c) {
+    var div = document.createElement('div');
+    div.className = 'cmt';
+    div.innerHTML =
+      '<div class="cmt-avatar" style="background:' + c.color + '">' + escHtml(c.name[0].toUpperCase()) + '</div>' +
+      '<div style="flex:1"><div class="cmt-author">' + escHtml(c.name) + '</div>' +
+      '<div class="cmt-date">' + timeAgo(c.time) + '</div>' +
+      '<p class="cmt-text">' + escHtml(c.text) + '</p></div>';
+    list.appendChild(div);
+  });
+}, 60000); // actualiza cada 60 segundos
+
+
 
 // =============================================================
 // TOAST
