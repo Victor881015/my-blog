@@ -108,7 +108,6 @@
     .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.6rem;}
     .ucard{background:var(--cream);border:1px solid var(--parchment);border-radius:14px;overflow:hidden;animation:fadeUp .4s both;transition:transform .25s,box-shadow .25s;}
     .ucard:hover{transform:translateY(-5px);box-shadow:0 16px 42px var(--shadow);}
-
     .ucard-img{width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;transition:transform .35s;}
     .ucard-img:hover{transform:scale(1.03);}
     .ucard-video{width:100%;max-height:220px;display:block;background:#000;}
@@ -118,7 +117,6 @@
     .ucard-file-box{height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,var(--parchment),#ddd0b8);}
     .file-big-icon{font-size:3rem;}
     .file-ext{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--espresso);opacity:.55;font-weight:700;}
-
     .ucard-body{padding:1.1rem 1.3rem;}
     .ucard-cat{display:inline-block;background:var(--parchment);color:var(--espresso);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .7rem;border-radius:100px;margin-bottom:.5rem;font-weight:500;}
     .ucard-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--espresso);margin-bottom:.25rem;}
@@ -134,32 +132,165 @@
     .btn-open:hover{background:var(--amber);}
     .btn-del{background:transparent;border:1px solid var(--parchment);color:#b07060;}
     .btn-del:hover{background:#fde8e8;border-color:#e07070;color:#c04040;}
-
-    /* Slot vacío — tarjeta placeholder */
     .ucard-slot{background:var(--cream);border:2px dashed var(--parchment);border-radius:14px;overflow:hidden;transition:all .3s;opacity:.65;}
     .ucard-slot:hover{opacity:1;border-color:var(--amber);}
     .slot-preview{height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,#f0e8d8,#e8dcc8);}
     .slot-num{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--amber);opacity:.4;font-weight:700;}
     .slot-label{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--espresso);opacity:.4;font-weight:700;}
-
     .empty-gallery{grid-column:1/-1;text-align:center;padding:3.5rem;color:#9a8a7a;font-size:.95rem;font-style:italic;border:2px dashed var(--parchment);border-radius:14px;}
 
-    .comments-sec{background:var(--cream);}
-    .comment-list{display:flex;flex-direction:column;gap:1.3rem;margin-bottom:3rem;}
-    .cmt{background:var(--warm);border:1px solid var(--parchment);border-radius:12px;padding:1.3rem;display:flex;gap:.9rem;animation:fadeUp .35s both;}
-    .cmt-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff;flex-shrink:0;font-weight:700;}
-    .cmt-author{font-weight:500;color:var(--espresso);font-size:.88rem;}
-    .cmt-date{font-size:.72rem;color:var(--sage);margin-top:.15rem;}
-    .cmt-text{font-size:.9rem;color:#5a4a3a;line-height:1.68;margin-top:.45rem;}
+    /* ══════════════════════════════════════════════
+       COMENTARIOS — MEJORADO ✨
+    ══════════════════════════════════════════════ */
+    .comments-sec { background: var(--cream); }
 
-    .cmt-form{background:var(--warm);border:1px solid var(--parchment);border-radius:16px;padding:2rem;}
-    .cmt-form-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--espresso);margin-bottom:1.3rem;}
-    .cmt-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
-    @media(max-width:560px){.cmt-form-grid{grid-template-columns:1fr;}}
-    .cmt-form-grid input,.cmt-form textarea{background:var(--cream);border:1px solid var(--parchment);color:var(--ink);border-radius:8px;padding:.72rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;width:100%;outline:none;transition:border-color .22s;}
-    .cmt-form-grid input:focus,.cmt-form textarea:focus{border-color:var(--amber);}
-    .cmt-submit{margin-top:.9rem;background:var(--espresso);color:var(--cream);border:none;padding:.82rem 2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .25s;}
-    .cmt-submit:hover{background:var(--amber);}
+    #commentList {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 3rem;
+    }
+
+    /* Tarjeta */
+    .cmt {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--warm);
+      border: 1px solid var(--parchment);
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .22s ease, box-shadow .22s ease;
+      animation: fadeUp .35s both;
+    }
+    .cmt::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--gold));
+      opacity: 0;
+      transition: opacity .22s;
+    }
+    .cmt:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--shadow); }
+    .cmt:hover::before { opacity: 1; }
+
+    /* Avatar */
+    .cmt-avatar {
+      width: 44px; height: 44px; min-width: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: #fff; font-weight: 700;
+      box-shadow: 0 3px 10px rgba(0,0,0,.2);
+      margin-top: 2px; flex-shrink: 0;
+    }
+
+    /* Cuerpo */
+    .cmt-body { flex: 1; display: flex; flex-direction: column; }
+
+    .cmt-header {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap;
+      gap: 6px; margin-bottom: 5px;
+    }
+    .cmt-author { font-weight: 600; color: var(--espresso); font-size: .9rem; }
+    .cmt-date {
+      font-size: .68rem; color: var(--sage);
+      background: rgba(122,140,110,.1);
+      padding: .18rem .65rem; border-radius: 100px;
+    }
+    .cmt-text {
+      font-size: .9rem; color: #5a4a3a;
+      line-height: 1.68; margin-bottom: 12px;
+      word-break: break-word;
+    }
+
+    /* Reacciones */
+    .cmt-reactions {
+      display: flex; align-items: center; gap: 6px;
+      padding-top: 10px;
+      border-top: 1px solid var(--parchment);
+      flex-wrap: wrap;
+    }
+    .reaction-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--cream);
+      border: 1.5px solid var(--parchment);
+      border-radius: 100px;
+      padding: 5px 13px;
+      font-size: .82rem; color: #7a6a5a;
+      cursor: pointer;
+      transition: background .18s, border-color .18s, color .18s, transform .15s, box-shadow .18s;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1;
+    }
+    .reaction-btn:hover {
+      background: var(--warm);
+      border-color: var(--amber);
+      color: var(--espresso);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(200,115,42,.18);
+    }
+    .reaction-btn:active { transform: scale(.93); }
+    .reaction-btn.reacted { animation: reactionPop .35s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes reactionPop {
+      0%   { transform: scale(1); }
+      45%  { transform: scale(1.32); }
+      100% { transform: scale(1); }
+    }
+    .r-emoji { font-size: 15px; line-height: 1; }
+    .r-count  { font-size: .78rem; font-weight: 600; min-width: 10px; text-align: center; }
+
+    /* Sin comentarios */
+    .cmt-empty {
+      text-align: center; padding: 3rem 1.5rem;
+      color: #b0a090; font-size: .92rem; font-style: italic;
+      border: 2px dashed var(--parchment); border-radius: 14px;
+    }
+
+    /* Formulario */
+    .cmt-form {
+      background: var(--warm);
+      border: 1px solid var(--parchment);
+      border-radius: 18px;
+      padding: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .cmt-form::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--gold));
+    }
+    .cmt-form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--espresso); margin-bottom: 1.3rem;
+    }
+    .cmt-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; margin-bottom: .9rem; }
+    @media(max-width:560px){ .cmt-form-grid{ grid-template-columns:1fr; } }
+    .cmt-form-grid input, .cmt-form textarea {
+      background: var(--cream); border: 1px solid var(--parchment);
+      color: var(--ink); border-radius: 8px;
+      padding: .72rem 1rem; font-family: 'DM Sans', sans-serif;
+      font-size: .9rem; width: 100%; outline: none;
+      transition: border-color .22s, box-shadow .22s;
+    }
+    .cmt-form-grid input:focus, .cmt-form textarea:focus {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(200,115,42,.12);
+    }
+    .cmt-submit {
+      margin-top: .9rem;
+      background: var(--espresso); color: var(--cream);
+      border: none; padding: .82rem 2rem; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: .82rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      cursor: pointer; transition: background .25s, transform .2s;
+    }
+    .cmt-submit:hover { background: var(--amber); transform: translateY(-1px); }
+    /* ══════════════════════════════════════════════ */
 
     .lightbox{display:none;position:fixed;inset:0;background:rgba(8,4,0,.94);z-index:1000;align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;}
     .lightbox.open{display:flex;}
@@ -270,7 +401,7 @@
           <strong>📁 Ruta de tu foto guardada:</strong><br>
           Para que la foto permanezca aunque recargues, guarda el archivo con el nombre:<br>
           <code id="photoPathDisplay">img/Victor.jpg</code><br>
-          <span style="opacity:.7;font-size:.72rem;">Coloca el archivo <em>Victor.jpg</em> en la carpeta <em>img/</em> junto al archivo HTML. Luego se cargará automáticamente.</span>
+          <span style="opacity:.7;font-size:.72rem;">Coloca el archivo <em>Victor.jpg</em> en la carpeta <em>img/</em> junto al archivo HTML.</span>
         </div>
       </div>
       <div>
@@ -297,10 +428,7 @@
     <h2 class="sec-title reveal">Subir Nueva Evidencia</h2>
     <p class="sec-desc reveal">Sube imágenes, videos, audios, PDFs o cualquier archivo. Se muestran al instante en la galería.</p>
     <div class="form-grid reveal">
-      <div class="fg">
-        <label>Título del trabajo</label>
-        <input type="text" id="upTitle" placeholder="Ej: My Autobiography">
-      </div>
+      <div class="fg"><label>Título del trabajo</label><input type="text" id="upTitle" placeholder="Ej: My Autobiography"></div>
       <div class="fg">
         <label>Categoría</label>
         <select id="upCat">
@@ -312,30 +440,18 @@
           <option value="grammar">📐 Grammar</option>
         </select>
       </div>
-      <div class="fg">
-        <label>Unidad / Tema</label>
-        <input type="text" id="upUnit" placeholder="Ej: Unit 1 — Personal Identity">
-      </div>
-      <div class="fg">
-        <label>Fecha</label>
-        <input type="text" id="upDate" placeholder="Ej: Marzo 2025">
-      </div>
-      <div class="fg full">
-        <label>Descripción</label>
-        <textarea id="upDesc" placeholder="Describe el trabajo, qué habilidades practicaste y qué aprendiste..."></textarea>
-      </div>
+      <div class="fg"><label>Unidad / Tema</label><input type="text" id="upUnit" placeholder="Ej: Unit 1 — Personal Identity"></div>
+      <div class="fg"><label>Fecha</label><input type="text" id="upDate" placeholder="Ej: Marzo 2025"></div>
+      <div class="fg full"><label>Descripción</label><textarea id="upDesc" placeholder="Describe el trabajo, qué habilidades practicaste y qué aprendiste..."></textarea></div>
       <div class="fg full">
         <label>Seleccionar archivos</label>
-        <!-- ✅ fileInput FUERA del dropzone — sin onclick inline — evita doble disparo -->
         <input type="file" id="fileInput" multiple style="display:none">
         <div class="drop-zone" id="dropZone">
           <div class="dz-icon">📎</div>
           <div class="dz-title">Arrastra aquí o haz clic para seleccionar</div>
           <div class="dz-sub">Imágenes · Videos · Audios · PDF · Word · Excel · Cualquier formato · Sin límite de tamaño</div>
         </div>
-        <div class="upload-progress-bar" id="uploadProgressBar">
-          <div class="upload-progress-fill" id="uploadProgressFill"></div>
-        </div>
+        <div class="upload-progress-bar" id="uploadProgressBar"><div class="upload-progress-fill" id="uploadProgressFill"></div></div>
         <div class="staged-list" id="stagedList"></div>
       </div>
     </div>
@@ -348,25 +464,28 @@
     <p class="sec-label reveal">Portfolio</p>
     <h2 class="sec-title reveal">Mis Evidencias</h2>
     <p class="sec-desc reveal" style="color:#5a4a3a;">Aquí aparecen todos los trabajos subidos. Los archivos grandes se muestran en esta sesión; los pequeños se guardan permanentemente.</p>
-    <div class="gallery-grid" id="galleryGrid">
-      <!-- Las tarjetas se insertan aquí por JS -->
-    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════════
+     SECCIÓN COMENTARIOS
+══════════════════════════════════════════════ -->
 <section class="comments-sec" id="comments">
   <div class="container">
     <p class="sec-label reveal">Comunidad</p>
     <h2 class="sec-title reveal">Comentarios &amp; Feedback</h2>
     <p class="sec-desc reveal">Deja un comentario o retroalimentación sobre el Blog.</p>
-    <div class="comment-list" id="commentList"></div>
+
+    <div id="commentList"></div>
+
     <div class="cmt-form">
       <div class="cmt-form-title">💬 Dejar un Comentario</div>
       <div class="cmt-form-grid">
         <input type="text" id="cmtName" placeholder="Tu nombre *">
         <input type="email" id="cmtEmail" placeholder="tu@email.com (opcional)">
       </div>
-      <textarea id="cmtText" style="width:100%;min-height:100px;" placeholder="Escribe tu comentario o retroalimentación aquí..."></textarea>
+      <textarea id="cmtText" style="width:100%;min-height:100px;background:var(--cream);border:1px solid var(--parchment);color:var(--ink);border-radius:8px;padding:.72rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .22s,box-shadow .22s;" placeholder="Escribe tu comentario o retroalimentación aquí..."></textarea>
       <br>
       <button class="cmt-submit" onclick="addComment()">Publicar Comentario →</button>
     </div>
@@ -379,7 +498,6 @@
     <p class="sec-label reveal">Interactivo</p>
     <h2 class="sec-title reveal" style="color:var(--cream);">Practice <em style="font-style:italic;color:var(--gold)">English</em></h2>
     <p class="sec-desc reveal">Aprende vocabulario, conjuga verbos, completa frases y pon a prueba tu inglés.</p>
-
     <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;" class="reveal">
       <button class="ptab active" onclick="showPrac('flashcards',this)">🃏 Flashcards</button>
       <button class="ptab" onclick="showPrac('verbs',this)">📝 Verbos</button>
@@ -387,7 +505,6 @@
       <button class="ptab" onclick="showPrac('wordbuilder',this)">🔤 Word Builder</button>
       <button class="ptab" onclick="showPrac('phrases',this)">💬 Frases Útiles</button>
     </div>
-
     <div id="prac-flashcards" class="prac-panel active">
       <div style="display:flex;flex-direction:column;align-items:center;gap:1.4rem;">
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;">
@@ -421,12 +538,9 @@
           <span id="fc-counter" style="color:rgba(250,247,242,.45);font-size:.8rem;min-width:60px;text-align:center;"></span>
           <button class="prac-btn-gold" onclick="fcNav(1)">Siguiente →</button>
         </div>
-        <button onclick="speakWord()" style="display:flex;align-items:center;gap:.55rem;padding:.7rem 1.6rem;border-radius:100px;border:2px solid rgba(212,168,67,.5);background:rgba(212,168,67,.1);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;">
-          🔊 Escuchar palabra
-        </button>
+        <button onclick="speakWord()" style="display:flex;align-items:center;gap:.55rem;padding:.7rem 1.6rem;border-radius:100px;border:2px solid rgba(212,168,67,.5);background:rgba(212,168,67,.1);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;">🔊 Escuchar palabra</button>
       </div>
     </div>
-
     <div id="prac-verbs" class="prac-panel">
       <div style="display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start;">
         <div>
@@ -440,7 +554,6 @@
         </div>
       </div>
     </div>
-
     <div id="prac-quiz" class="prac-panel">
       <div style="max-width:580px;margin:0 auto;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;">
@@ -468,7 +581,6 @@
         </div>
       </div>
     </div>
-
     <div id="prac-wordbuilder" class="prac-panel">
       <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:1.2rem;">
         <div style="background:rgba(250,247,242,.06);border:1px solid rgba(212,168,67,.25);border-radius:12px;padding:1.4rem;text-align:center;">
@@ -488,7 +600,6 @@
         <div style="text-align:center;font-size:.8rem;color:rgba(250,247,242,.4);">✅ Correctas: <span id="wb-correct">0</span> &nbsp;|&nbsp; ❌ Incorrectas: <span id="wb-wrong">0</span></div>
       </div>
     </div>
-
     <div id="prac-phrases" class="prac-panel">
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem;" id="phrases-grid"></div>
     </div>
@@ -515,53 +626,18 @@
 var stagedFiles = [];
 var persistedUploads = [];
 window._cardUrls = {};
-
 var PHOTO_LOCAL_PATH = 'img/Victor.jpg';
 
-// =============================================================
-// ╔══════════════════════════════════════════════════════════╗
-// ║  ARCHIVOS DE LA CARPETA img/ — CONFIGURA TUS 7 SLOTS    ║
-// ║                                                          ║
-// ║  Cuando tengas un archivo listo en img/, pon su nombre  ║
-// ║  exacto en el campo "name" del slot correspondiente.    ║
-// ║  Los slots con name:'' se muestran como placeholders.   ║
-// ╚══════════════════════════════════════════════════════════╝
 var IMG_FOLDER_FILES = [
-
-  // ══════ SLOT 1 — about.oga ✅ CONFIGURADO ══════
-  {
-    slot:  1,
-    path:  'img/about.oga',
-    name:  'about.oga',
-    type:  'audio/ogg',
-    title: 'About Me',
-    cat:   'speaking',
-    unit:  'Unit 1 — Personal Identity',
-    date:  'Febrero 2026',
-    desc:  'Audio de presentación personal en inglés.'
-  },
-
-  // ══════ SLOT 2 — pon aquí tu segundo archivo ══════
-  // Ejemplo cuando lo tengas: { slot:2, path:'img/essay.pdf', name:'essay.pdf', type:'application/pdf', title:'My Essay', cat:'writing', unit:'Unit 2', date:'Febrero 2026', desc:'...' }
-  { slot:2, path:'img/Escrito.pdf', name:'Escrito.pdf', type:'pdf', title:'Documento escrito GA6-240202501-AA1-EV01', cat:'writing',   unit:'', date:'Febrero 2026', desc:'Escrito' },
-
-  // ══════ SLOT 3 ══════
-  { slot:3, path:'img/mother.mp4', name:'Presentacion', type:'mp4', title:'Video presentación. GA1-240202501-AA1-EV02', cat:'Video',   unit:'Presentation', date:'Febrero 2026', desc:'Presentacion Mother' },
-
-  // ══════ SLOT 4 ══════
-  { slot:4, path:'img/evolucion.mp4', name:'Evolucion Tecnologica', type:'mp4', title:'Video GA6-240202501-AA1-EV02', cat:'listening', unit:'', date:'Febrero 2026', desc:'Evolucion' },
-
-  // ══════ SLOT 5 ══════
-  { slot:5, path:'img/job.mp4', name:'Job Interview', type:'mp4', title:'Vídeo entrevista virtual. GA2-240202501-AA1-EV02', cat:'grammar',   unit:'', date:'Febrero 2026', desc:'Entrevista Virtual' },
-
-  // ══════ SLOT 6 ══════
+  { slot:1, path:'img/about.oga',       name:'about.oga',      type:'audio/ogg',      title:'About Me',                                    cat:'speaking', unit:'Unit 1 — Personal Identity', date:'Febrero 2026', desc:'Audio de presentación personal en inglés.' },
+  { slot:2, path:'img/Escrito.pdf',     name:'Escrito.pdf',    type:'pdf',             title:'Documento escrito GA6-240202501-AA1-EV01',    cat:'writing',  unit:'',                           date:'Febrero 2026', desc:'Escrito' },
+  { slot:3, path:'img/mother.mp4',      name:'Presentacion',   type:'mp4',             title:'Video presentación. GA1-240202501-AA1-EV02',  cat:'Video',    unit:'Presentation',               date:'Febrero 2026', desc:'Presentacion Mother' },
+  { slot:4, path:'img/evolucion.mp4',   name:'Evolucion Tecnologica', type:'mp4',      title:'Video GA6-240202501-AA1-EV02',                cat:'listening',unit:'',                           date:'Febrero 2026', desc:'Evolucion' },
+  { slot:5, path:'img/job.mp4',         name:'Job Interview',  type:'mp4',             title:'Vídeo entrevista virtual. GA2-240202501-AA1-EV02', cat:'grammar', unit:'',                      date:'Febrero 2026', desc:'Entrevista Virtual' },
   { slot:6, path:'img/', name:'', type:'', title:'Evidencia 6', cat:'writing',   unit:'', date:'Febrero 2026', desc:'Próximamente...' },
-
-  // ══════ SLOT 7 ══════
   { slot:7, path:'img/', name:'', type:'', title:'Evidencia 7', cat:'speaking',  unit:'', date:'Febrero 2026', desc:'Próximamente...' },
 ];
 
-// MIME types por extensión
 var MIME_MAP = {
   jpg:'image/jpeg', jpeg:'image/jpeg', png:'image/png', webp:'image/webp', gif:'image/gif',
   mp4:'video/mp4', webm:'video/webm', ogv:'video/ogg',
@@ -569,22 +645,17 @@ var MIME_MAP = {
   pdf:'application/pdf', doc:'application/msword', docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 };
 
-// catLabels para mostrar en tarjetas
 var catLabels = {
-  writing:  '✍️ Writing',
-  speaking: '🎤 Speaking',
-  reading:  '📖 Reading',
-  listening:'🎧 Listening',
-  grammar:  '📐 Grammar'
+  writing:'✍️ Writing', speaking:'🎤 Speaking', reading:'📖 Reading', listening:'🎧 Listening', grammar:'📐 Grammar'
 };
 
 // =============================================================
 // INIT
 // =============================================================
 window.addEventListener('DOMContentLoaded', function () {
-  initDropZone();       // ← conectar eventos del uploader (UN SOLO listener)
-  renderImgFolder();    // ← mostrar los 7 slots (archivos reales + placeholders)
-  loadUploads();        // ← restaurar uploads de localStorage
+  initDropZone();
+  renderImgFolder();
+  loadUploads();
   loadComments();
   initVerbs();
   loadWB();
@@ -604,18 +675,11 @@ var ro = new IntersectionObserver(function(entries) {
 document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
 
 // =============================================================
-// RENDER IMG FOLDER — muestra los 7 slots siempre visibles
-// Los slots con archivo real se cargan; los vacíos muestran placeholder
+// RENDER IMG FOLDER
 // =============================================================
 function renderImgFolder() {
   IMG_FOLDER_FILES.forEach(function(item) {
-    if (item.name) {
-      // Archivo configurado — intentar cargar, mostrar tarjeta real
-      loadImgSlot(item);
-    } else {
-      // Slot vacío — mostrar tarjeta placeholder
-      addSlotPlaceholder(item);
-    }
+    if (item.name) { loadImgSlot(item); } else { addSlotPlaceholder(item); }
   });
 }
 
@@ -623,74 +687,35 @@ function loadImgSlot(item) {
   var ext  = item.name.split('.').pop().toLowerCase();
   var mime = item.type || MIME_MAP[ext] || 'application/octet-stream';
   var src  = item.path.endsWith('/') ? item.path + item.name : item.path;
-  var cardId = 'imgslot_' + item.slot;
-
-  var data = {
-    id:    cardId,
-    title: item.title || item.name,
-    cat:   item.cat   || 'speaking',
-    unit:  item.unit  || '',
-    date:  item.date  || 'Febrero 2026',
-    desc:  item.desc  || '',
-    name:  item.name,
-    type:  mime,
-    size:  0,
-    src:   src
-  };
-
-  // HEAD request — solo muestra si el archivo existe en el servidor
+  var data = { id:'imgslot_'+item.slot, title:item.title||item.name, cat:item.cat||'speaking', unit:item.unit||'', date:item.date||'Febrero 2026', desc:item.desc||'', name:item.name, type:mime, size:0, src:src };
   var xhr = new XMLHttpRequest();
   xhr.open('HEAD', src + '?t=' + Date.now(), true);
   xhr.onload = function() {
     if (xhr.status >= 200 && xhr.status < 400) {
-      // Remover placeholder si existe
       var ph = document.querySelector('[data-slot="' + item.slot + '"]');
       if (ph) ph.remove();
       addGalleryCard(data);
-    } else {
-      // Archivo configurado pero no encontrado — mostrar placeholder de error
-      addSlotPlaceholder(item, true);
-    }
+    } else { addSlotPlaceholder(item, true); }
   };
-  xhr.onerror = function() {
-    addSlotPlaceholder(item, true);
-  };
+  xhr.onerror = function() { addSlotPlaceholder(item, true); };
   xhr.send();
 }
 
 function addSlotPlaceholder(item, notFound) {
-  // Evitar duplicados
   if (document.querySelector('[data-slot="' + item.slot + '"]')) return;
-
   var grid = document.getElementById('galleryGrid');
   var emptyMsg = document.getElementById('emptyMsg');
   if (emptyMsg) emptyMsg.remove();
-
   var catIcon = { writing:'✍️', speaking:'🎤', reading:'📖', listening:'🎧', grammar:'📐' };
   var icon = catIcon[item.cat] || '📁';
-
   var card = document.createElement('div');
   card.className = 'ucard ucard-slot';
   card.setAttribute('data-slot', item.slot);
   card.innerHTML =
-    '<div class="slot-preview">' +
-      '<div class="slot-num">' + item.slot + '</div>' +
-      '<div class="slot-label">' + icon + ' ' + (item.cat || 'evidencia') + '</div>' +
-      (notFound ? '<div style="font-size:.65rem;color:#c8732a;margin-top:.3rem;">⚠ Archivo no encontrado</div>' : '') +
-    '</div>' +
-    '<div class="ucard-body">' +
-      '<span class="ucard-cat">' + (catLabels[item.cat] || item.cat || 'Evidencia') + '</span>' +
-      '<div class="ucard-title">' + escHtml(item.title) + '</div>' +
-      '<div class="ucard-unit">' + escHtml(item.date || '') + '</div>' +
-      '<div class="ucard-desc" style="font-style:italic;opacity:.6;">' +
-        (notFound
-          ? 'Archivo <code style="font-size:.75rem;">' + escHtml(item.name) + '</code> no encontrado en <code style="font-size:.75rem;">img/</code>'
-          : escHtml(item.desc || 'Próximamente...')) +
-      '</div>' +
-      (notFound ? '' :
-        '<div style="font-size:.7rem;color:var(--amber);margin-top:.3rem;opacity:.8;">📁 Configura el nombre del archivo en <code>IMG_FOLDER_FILES</code></div>') +
-    '</div>';
-
+    '<div class="slot-preview"><div class="slot-num">'+item.slot+'</div><div class="slot-label">'+icon+' '+(item.cat||'evidencia')+'</div>'+(notFound?'<div style="font-size:.65rem;color:#c8732a;margin-top:.3rem;">⚠ Archivo no encontrado</div>':'')+'</div>'+
+    '<div class="ucard-body"><span class="ucard-cat">'+(catLabels[item.cat]||item.cat||'Evidencia')+'</span><div class="ucard-title">'+escHtml(item.title)+'</div><div class="ucard-unit">'+escHtml(item.date||'')+'</div>'+
+    '<div class="ucard-desc" style="font-style:italic;opacity:.6;">'+(notFound?'Archivo <code style="font-size:.75rem;">'+escHtml(item.name)+'</code> no encontrado en <code style="font-size:.75rem;">img/</code>':escHtml(item.desc||'Próximamente...'))+'</div>'+
+    (notFound?'':'<div style="font-size:.7rem;color:var(--amber);margin-top:.3rem;opacity:.8;">📁 Configura el nombre del archivo en <code>IMG_FOLDER_FILES</code></div>')+'</div>';
   grid.appendChild(card);
 }
 
@@ -701,24 +726,17 @@ function tryLoadLocalPhoto() {
   var localImg = new Image();
   localImg.onload = function() { applyPhoto(PHOTO_LOCAL_PATH, false); };
   localImg.onerror = function() {
-    try {
-      var saved = localStorage.getItem('profile_photo_b64');
-      if (saved) applyPhoto(saved, false);
-    } catch(e) {}
+    try { var saved = localStorage.getItem('profile_photo_b64'); if (saved) applyPhoto(saved, false); } catch(e) {}
   };
   localImg.src = PHOTO_LOCAL_PATH + '?v=' + Date.now();
 }
 
 function applyPhoto(src, showPathInfo) {
   var img = document.getElementById('profilePhoto');
-  img.src = src;
-  img.style.display = 'block';
+  img.src = src; img.style.display = 'block';
   document.getElementById('photoPlaceholder').style.display = 'none';
-  var box = document.getElementById('aboutImgBox');
-  box.onclick = function() { openLightbox(src); };
-  if (showPathInfo !== false) {
-    document.getElementById('photoPathInfo').style.display = 'block';
-  }
+  document.getElementById('aboutImgBox').onclick = function() { openLightbox(src); };
+  if (showPathInfo !== false) document.getElementById('photoPathInfo').style.display = 'block';
 }
 
 function loadProfilePhoto(input) {
@@ -729,448 +747,302 @@ function loadProfilePhoto(input) {
   document.getElementById('photoPathDisplay').textContent = PHOTO_LOCAL_PATH;
   showToast('📷 Foto cargada. Guárdala como: img/Victor.jpg junto al HTML para que persista.', 'success');
   var reader = new FileReader();
-  reader.onload = function(e) {
-    try { localStorage.setItem('profile_photo_b64', e.target.result); } catch(err) {}
-  };
+  reader.onload = function(e) { try { localStorage.setItem('profile_photo_b64', e.target.result); } catch(err) {} };
   try { reader.readAsDataURL(file); } catch(e) {}
 }
 
 // =============================================================
 // LIGHTBOX
 // =============================================================
-function openLightbox(src) {
-  document.getElementById('lbImg').src = src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function openLightboxById(id) {
-  var src = window._cardUrls[String(id)];
-  if (src) openLightbox(src);
-}
-
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
+function openLightbox(src) { document.getElementById('lbImg').src = src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function openLightboxById(id) { var src = window._cardUrls[String(id)]; if (src) openLightbox(src); }
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
 
 // =============================================================
-// ✅ DROP ZONE — UN SOLO listener, sin onclick en HTML
+// DROP ZONE
 // =============================================================
 var dropZone, fileInput;
-
 function initDropZone() {
   fileInput = document.getElementById('fileInput');
   dropZone  = document.getElementById('dropZone');
-  if (!fileInput || !dropZone) { console.error('fileInput o dropZone no encontrado'); return; }
-
-  // ✅ UN SOLO clic: dropZone → abrir selector
+  if (!fileInput || !dropZone) return;
   dropZone.addEventListener('click', function() { fileInput.click(); });
-
-  fileInput.addEventListener('change', function() {
-    if (fileInput.files && fileInput.files.length) addToStage(fileInput.files);
-    fileInput.value = '';
-  });
-
+  fileInput.addEventListener('change', function() { if (fileInput.files && fileInput.files.length) addToStage(fileInput.files); fileInput.value = ''; });
   dropZone.addEventListener('dragover',  function(e) { e.preventDefault(); dropZone.classList.add('over'); });
   dropZone.addEventListener('dragleave', function()  { dropZone.classList.remove('over'); });
-  dropZone.addEventListener('drop',      function(e) {
-    e.preventDefault();
-    dropZone.classList.remove('over');
-    if (e.dataTransfer.files.length) addToStage(e.dataTransfer.files);
-  });
+  dropZone.addEventListener('drop',      function(e) { e.preventDefault(); dropZone.classList.remove('over'); if (e.dataTransfer.files.length) addToStage(e.dataTransfer.files); });
 }
 
 function getIcon(file) {
   var t = file.type, n = file.name.toLowerCase();
-  if (t.startsWith('image/')) return '🖼️';
-  if (t.startsWith('video/')) return '🎬';
-  if (t.startsWith('audio/')) return '🎵';
-  if (t === 'application/pdf' || n.endsWith('.pdf')) return '📄';
-  if (n.match(/\.docx?$/)) return '📝';
-  if (n.match(/\.pptx?$/)) return '📊';
-  if (n.match(/\.xlsx?$/)) return '📋';
-  return '📎';
+  if (t.startsWith('image/')) return '🖼️'; if (t.startsWith('video/')) return '🎬'; if (t.startsWith('audio/')) return '🎵';
+  if (t === 'application/pdf' || n.endsWith('.pdf')) return '📄'; if (n.match(/\.docx?$/)) return '📝'; if (n.match(/\.pptx?$/)) return '📊'; if (n.match(/\.xlsx?$/)) return '📋'; return '📎';
 }
 
-function fmtSize(b) {
-  if (b < 1024) return b + ' B';
-  if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
-  return (b / 1048576).toFixed(1) + ' MB';
-}
+function fmtSize(b) { if (b < 1024) return b+' B'; if (b < 1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
 
 function addToStage(files) {
   Array.from(files).forEach(function(file) {
-    var id  = 'sf_' + Date.now() + '_' + Math.round(Math.random() * 99999);
+    var id = 'sf_'+Date.now()+'_'+Math.round(Math.random()*99999);
     var url = URL.createObjectURL(file);
-    stagedFiles.push({ id: id, file: file, url: url });
-
-    var wrap = document.createElement('div');
-    wrap.className = 'staged-item';
-    wrap.id = 'stage_' + id;
-
-    var prevHTML = file.type.startsWith('image/')
-      ? '<img class="s-thumb" src="' + url + '" alt="">'
-      : '<span class="s-icon">' + getIcon(file) + '</span>';
-
-    wrap.innerHTML = prevHTML +
-      '<div class="s-info">' +
-        '<div class="s-name">' + escHtml(file.name) + '</div>' +
-        '<div class="s-size">' + fmtSize(file.size) + '</div>' +
-      '</div>' +
-      '<button class="s-del" onclick="removeFromStage(\'' + id + '\')">✕</button>';
-
+    stagedFiles.push({ id:id, file:file, url:url });
+    var wrap = document.createElement('div'); wrap.className = 'staged-item'; wrap.id = 'stage_'+id;
+    var prevHTML = file.type.startsWith('image/') ? '<img class="s-thumb" src="'+url+'" alt="">' : '<span class="s-icon">'+getIcon(file)+'</span>';
+    wrap.innerHTML = prevHTML+'<div class="s-info"><div class="s-name">'+escHtml(file.name)+'</div><div class="s-size">'+fmtSize(file.size)+'</div></div><button class="s-del" onclick="removeFromStage(\''+id+'\')">✕</button>';
     document.getElementById('stagedList').appendChild(wrap);
   });
 }
 
-function removeFromStage(id) {
-  stagedFiles = stagedFiles.filter(function(f) { return f.id !== id; });
-  var el = document.getElementById('stage_' + id);
-  if (el) el.remove();
-}
+function removeFromStage(id) { stagedFiles = stagedFiles.filter(function(f){return f.id!==id;}); var el=document.getElementById('stage_'+id); if(el)el.remove(); }
 
 // =============================================================
 // SUBMIT EVIDENCE
 // =============================================================
 function submitEvidence() {
-  var title = document.getElementById('upTitle').value.trim();
-  var cat   = document.getElementById('upCat').value;
-  var unit  = document.getElementById('upUnit').value.trim();
-  var date  = document.getElementById('upDate').value.trim();
-  var desc  = document.getElementById('upDesc').value.trim();
-
-  if (!title) { showToast('⚠️ Escribe un título para el trabajo', 'error'); return; }
-  if (!cat)   { showToast('⚠️ Selecciona una categoría', 'error'); return; }
-  if (!stagedFiles.length) { showToast('⚠️ Selecciona al menos un archivo', 'error'); return; }
-
-  var submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = '⏳ Publicando...';
-
-  var progressBar  = document.getElementById('uploadProgressBar');
-  var progressFill = document.getElementById('uploadProgressFill');
-  progressBar.style.display = 'block';
-
-  var snap  = stagedFiles.slice();
-  var total = snap.length;
-  var done  = 0;
-
-  snap.forEach(function(item, index) {
-    var cardId = 'card_' + Date.now() + '_' + index + '_' + Math.round(Math.random() * 99999);
-    var data = {
-      id:    cardId,
-      title: title, cat: cat, unit: unit, date: date, desc: desc,
-      name:  item.file.name, type: item.file.type, size: item.file.size,
-      src:   item.url, base64: null
-    };
-
-    addGalleryCard(data);
-    done++;
-    progressFill.style.width = Math.round(done / total * 100) + '%';
-
-    if (item.file.size < 3 * 1024 * 1024) {
-      (function(d, f) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          d.base64 = e.target.result;
-          d.src    = e.target.result;
-          window._cardUrls[String(d.id)] = e.target.result;
-          persistedUploads.push(d);
-          try { localStorage.setItem('portfolio_uploads', JSON.stringify(persistedUploads)); } catch(err) {
-            persistedUploads = persistedUploads.filter(function(u){ return u.id !== d.id; });
-          }
-        };
-        try { reader.readAsDataURL(f); } catch(e) {}
-      })(data, item.file);
-    }
+  var title=document.getElementById('upTitle').value.trim(), cat=document.getElementById('upCat').value, unit=document.getElementById('upUnit').value.trim(), date=document.getElementById('upDate').value.trim(), desc=document.getElementById('upDesc').value.trim();
+  if(!title){showToast('⚠️ Escribe un título para el trabajo','error');return;}
+  if(!cat){showToast('⚠️ Selecciona una categoría','error');return;}
+  if(!stagedFiles.length){showToast('⚠️ Selecciona al menos un archivo','error');return;}
+  var submitBtn=document.getElementById('submitBtn'); submitBtn.disabled=true; submitBtn.textContent='⏳ Publicando...';
+  var progressBar=document.getElementById('uploadProgressBar'), progressFill=document.getElementById('uploadProgressFill'); progressBar.style.display='block';
+  var snap=stagedFiles.slice(), total=snap.length, done=0;
+  snap.forEach(function(item,index){
+    var cardId='card_'+Date.now()+'_'+index+'_'+Math.round(Math.random()*99999);
+    var data={id:cardId,title:title,cat:cat,unit:unit,date:date,desc:desc,name:item.file.name,type:item.file.type,size:item.file.size,src:item.url,base64:null};
+    addGalleryCard(data); done++; progressFill.style.width=Math.round(done/total*100)+'%';
+    if(item.file.size<3*1024*1024){(function(d,f){var reader=new FileReader();reader.onload=function(e){d.base64=e.target.result;d.src=e.target.result;window._cardUrls[String(d.id)]=e.target.result;persistedUploads.push(d);try{localStorage.setItem('portfolio_uploads',JSON.stringify(persistedUploads));}catch(err){persistedUploads=persistedUploads.filter(function(u){return u.id!==d.id;});}};try{reader.readAsDataURL(f);}catch(e){};})(data,item.file);}
   });
-
-  document.getElementById('upTitle').value = '';
-  document.getElementById('upCat').value   = '';
-  document.getElementById('upUnit').value  = '';
-  document.getElementById('upDate').value  = '';
-  document.getElementById('upDesc').value  = '';
-  document.getElementById('stagedList').innerHTML = '';
-  stagedFiles = [];
-
-  setTimeout(function() {
-    submitBtn.disabled = false;
-    submitBtn.textContent = '📤 Publicar en Galería';
-    progressBar.style.display = 'none';
-    progressFill.style.width = '0%';
-    showToast('✅ ' + total + ' archivo(s) publicado(s) en la galería', 'success');
-    document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
-  }, 600);
+  document.getElementById('upTitle').value=''; document.getElementById('upCat').value=''; document.getElementById('upUnit').value=''; document.getElementById('upDate').value=''; document.getElementById('upDesc').value=''; document.getElementById('stagedList').innerHTML=''; stagedFiles=[];
+  setTimeout(function(){submitBtn.disabled=false;submitBtn.textContent='📤 Publicar en Galería';progressBar.style.display='none';progressFill.style.width='0%';showToast('✅ '+total+' archivo(s) publicado(s) en la galería','success');document.getElementById('gallery').scrollIntoView({behavior:'smooth'});},600);
 }
 
 // =============================================================
 // ADD GALLERY CARD
 // =============================================================
 function addGalleryCard(data) {
-  var grid = document.getElementById('galleryGrid');
-  var emptyMsg = document.getElementById('emptyMsg');
-  if (emptyMsg) emptyMsg.remove();
-
-  var src   = data.src || data.base64 || '';
-  var t     = data.type || '';
-  var n     = (data.name || '').toLowerCase();
-  var isImg = t.startsWith('image/');
-  var isVid = t.startsWith('video/');
-  var isAud = t.startsWith('audio/');
-  var isPDF = t === 'application/pdf' || n.endsWith('.pdf');
-  var ext   = n.split('.').pop().toUpperCase();
-  var sid   = String(data.id);
-
-  window._cardUrls[sid] = src;
-
-  var media = '';
-  if (isImg) {
-    media = '<img class="ucard-img" src="' + src + '" alt="' + escHtml(data.title) + '" ' +
-            'onclick="openLightboxById(\'' + sid + '\')" title="Clic para ampliar" ' +
-            'onerror="this.style.display=\'none\'">';
-  } else if (isVid) {
-    media = '<video class="ucard-video" controls preload="metadata">' +
-            '<source src="' + src + '" type="' + escHtml(t) + '">' +
-            'Tu navegador no soporta este video.</video>';
-  } else if (isAud) {
-    media = '<div class="ucard-audio-box">' +
-            '<div class="audio-wave">🎵</div>' +
-            '<div style="font-family:Playfair Display,serif;font-size:.9rem;color:rgba(250,247,242,.6);margin-bottom:.4rem;">' + escHtml(data.name) + '</div>' +
-            '<audio controls preload="metadata" style="width:100%">' +
-            '<source src="' + src + '" type="' + escHtml(t) + '">' +
-            'Tu navegador no soporta audio.</audio></div>';
-  } else if (isPDF) {
-    media = '<div class="ucard-file-box"><div class="file-big-icon">📄</div><div class="file-ext">PDF</div></div>';
-  } else {
-    media = '<div class="ucard-file-box"><div class="file-big-icon">📎</div><div class="file-ext">' + escHtml(ext) + '</div></div>';
-  }
-
-  var actionBtn = '';
-  if (isImg) {
-    actionBtn = '<button class="btn-action btn-view-img" onclick="openLightboxById(\'' + sid + '\')">🔍 Ampliar</button>';
-  } else if (isPDF) {
-    actionBtn = '<a class="btn-action btn-open" href="' + src + '" target="_blank">📄 Abrir PDF</a>';
-  } else if (isVid) {
-    actionBtn = '<span class="btn-action" style="background:var(--sage);color:#fff;cursor:default;">▶ Video</span>';
-  } else if (isAud) {
-    actionBtn = '<span class="btn-action" style="background:var(--sage);color:#fff;cursor:default;">🎵 Audio</span>';
-  } else {
-    actionBtn = '<a class="btn-action btn-open" href="' + src + '" target="_blank">📎 Abrir</a>';
-  }
-
-  var sizeNote = (data.size > 3 * 1024 * 1024)
-    ? '<span style="font-size:.65rem;color:#b07040;display:block;margin-top:.2rem;">⚠️ Solo disponible esta sesión</span>'
-    : '';
-
-  var dateStr = data.date || new Date().toLocaleDateString('es-ES', { year:'numeric', month:'long' });
-  var unitStr = data.unit ? ' · ' + escHtml(data.unit) : '';
-
-  var card = document.createElement('div');
-  card.className = 'ucard';
-  card.setAttribute('data-id', sid);
-  card.innerHTML = media +
-    '<div class="ucard-body">' +
-      '<span class="ucard-cat">' + escHtml(catLabels[data.cat] || data.cat) + '</span>' +
-      '<div class="ucard-title">' + escHtml(data.title) + '</div>' +
-      '<div class="ucard-unit">' + escHtml(dateStr) + unitStr + '</div>' +
-      sizeNote +
-      '<div class="ucard-desc">' + escHtml(data.desc || 'Sin descripción.') + '</div>' +
-      '<div class="ucard-actions">' +
-        actionBtn +
-        '<a class="btn-action btn-dl" href="' + src + '" download="' + escHtml(data.name) + '">⬇ Descargar</a>' +
-        '<button class="btn-action btn-del" onclick="deleteUpload(\'' + sid + '\',this)">🗑</button>' +
-      '</div>' +
-    '</div>';
-
+  var grid=document.getElementById('galleryGrid'); var emptyMsg=document.getElementById('emptyMsg'); if(emptyMsg)emptyMsg.remove();
+  var src=data.src||data.base64||'', t=data.type||'', n=(data.name||'').toLowerCase();
+  var isImg=t.startsWith('image/'), isVid=t.startsWith('video/'), isAud=t.startsWith('audio/');
+  var isPDF=t==='application/pdf'||n.endsWith('.pdf'), ext=n.split('.').pop().toUpperCase(), sid=String(data.id);
+  window._cardUrls[sid]=src;
+  var media='';
+  if(isImg) media='<img class="ucard-img" src="'+src+'" alt="'+escHtml(data.title)+'" onclick="openLightboxById(\''+sid+'\')" title="Clic para ampliar" onerror="this.style.display=\'none\'">';
+  else if(isVid) media='<video class="ucard-video" controls preload="metadata"><source src="'+src+'" type="'+escHtml(t)+'">Tu navegador no soporta este video.</video>';
+  else if(isAud) media='<div class="ucard-audio-box"><div class="audio-wave">🎵</div><div style="font-family:Playfair Display,serif;font-size:.9rem;color:rgba(250,247,242,.6);margin-bottom:.4rem;">'+escHtml(data.name)+'</div><audio controls preload="metadata" style="width:100%"><source src="'+src+'" type="'+escHtml(t)+'">Tu navegador no soporta audio.</audio></div>';
+  else if(isPDF) media='<div class="ucard-file-box"><div class="file-big-icon">📄</div><div class="file-ext">PDF</div></div>';
+  else media='<div class="ucard-file-box"><div class="file-big-icon">📎</div><div class="file-ext">'+escHtml(ext)+'</div></div>';
+  var actionBtn='';
+  if(isImg) actionBtn='<button class="btn-action btn-view-img" onclick="openLightboxById(\''+sid+'\')">🔍 Ampliar</button>';
+  else if(isPDF) actionBtn='<a class="btn-action btn-open" href="'+src+'" target="_blank">📄 Abrir PDF</a>';
+  else if(isVid) actionBtn='<span class="btn-action" style="background:var(--sage);color:#fff;cursor:default;">▶ Video</span>';
+  else if(isAud) actionBtn='<span class="btn-action" style="background:var(--sage);color:#fff;cursor:default;">🎵 Audio</span>';
+  else actionBtn='<a class="btn-action btn-open" href="'+src+'" target="_blank">📎 Abrir</a>';
+  var sizeNote=data.size>3*1024*1024?'<span style="font-size:.65rem;color:#b07040;display:block;margin-top:.2rem;">⚠️ Solo disponible esta sesión</span>':'';
+  var dateStr=data.date||new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long'});
+  var unitStr=data.unit?' · '+escHtml(data.unit):'';
+  var card=document.createElement('div'); card.className='ucard'; card.setAttribute('data-id',sid);
+  card.innerHTML=media+'<div class="ucard-body"><span class="ucard-cat">'+escHtml(catLabels[data.cat]||data.cat)+'</span><div class="ucard-title">'+escHtml(data.title)+'</div><div class="ucard-unit">'+escHtml(dateStr)+unitStr+'</div>'+sizeNote+'<div class="ucard-desc">'+escHtml(data.desc||'Sin descripción.')+'</div><div class="ucard-actions">'+actionBtn+'<a class="btn-action btn-dl" href="'+src+'" download="'+escHtml(data.name)+'">⬇ Descargar</a><button class="btn-action btn-del" onclick="deleteUpload(\''+sid+'\',this)">🗑</button></div></div>';
   grid.appendChild(card);
 }
 
-function escHtml(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function escHtml(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// =============================================================
-// DELETE UPLOAD
-// =============================================================
-function deleteUpload(id, btn) {
-  if (btn) btn.closest('.ucard').remove();
-  persistedUploads = persistedUploads.filter(function(u) { return String(u.id) !== String(id); });
-  delete window._cardUrls[String(id)];
-  try { localStorage.setItem('portfolio_uploads', JSON.stringify(persistedUploads)); } catch(e) {}
-  showToast('🗑 Archivo eliminado.', '');
-}
+function deleteUpload(id,btn) { if(btn)btn.closest('.ucard').remove(); persistedUploads=persistedUploads.filter(function(u){return String(u.id)!==String(id);}); delete window._cardUrls[String(id)]; try{localStorage.setItem('portfolio_uploads',JSON.stringify(persistedUploads));}catch(e){} showToast('🗑 Archivo eliminado.',''); }
 
-// =============================================================
-// LOAD UPLOADS FROM LOCALSTORAGE
-// =============================================================
 function loadUploads() {
-  try {
-    var data = JSON.parse(localStorage.getItem('portfolio_uploads') || '[]');
-    persistedUploads = data;
-    data.forEach(function(item) {
-      if (item.base64) item.src = item.base64;
-      addGalleryCard(item);
-    });
-  } catch(e) { console.warn('Error al cargar uploads:', e); }
+  try { var data=JSON.parse(localStorage.getItem('portfolio_uploads')||'[]'); persistedUploads=data; data.forEach(function(item){ if(item.base64)item.src=item.base64; addGalleryCard(item); }); } catch(e) {}
 }
 
 // =============================================================
-// COMMENTS
+// ══ COMENTARIOS — MEJORADO CON REACCIONES PERSISTENTES ══
 // =============================================================
+
+/* Lee todos los comentarios del localStorage */
+function getComments() {
+  try { return JSON.parse(localStorage.getItem('portfolio_comments') || '[]'); } catch(e) { return []; }
+}
+
+/* Guarda el array completo de comentarios */
+function saveComments(comments) {
+  try { localStorage.setItem('portfolio_comments', JSON.stringify(comments)); } catch(e) {}
+}
+
+/* Construye el elemento DOM completo de un comentario */
+function buildCommentEl(c, index) {
+  var reactions = c.reactions || { like: 0, love: 0, wow: 0 };
+
+  var div = document.createElement('div');
+  div.className = 'cmt';
+
+  // Avatar
+  var avatar = document.createElement('div');
+  avatar.className = 'cmt-avatar';
+  avatar.style.background = c.color;
+  avatar.textContent = c.name[0].toUpperCase();
+
+  // Cuerpo
+  var body = document.createElement('div');
+  body.className = 'cmt-body';
+
+  // Header: nombre + fecha en la misma línea
+  var header = document.createElement('div');
+  header.className = 'cmt-header';
+
+  var author = document.createElement('div');
+  author.className = 'cmt-author';
+  author.textContent = c.name;
+
+  var date = document.createElement('div');
+  date.className = 'cmt-date';
+  date.textContent = timeAgo(c.time);
+
+  header.appendChild(author);
+  header.appendChild(date);
+
+  // Texto del comentario
+  var text = document.createElement('p');
+  text.className = 'cmt-text';
+  text.textContent = c.text;
+
+  // Reacciones
+  var reactBox = document.createElement('div');
+  reactBox.className = 'cmt-reactions';
+
+  [
+    { type: 'like',  emoji: '👍' },
+    { type: 'love',  emoji: '❤️' },
+    { type: 'wow',   emoji: '😲' }
+  ].forEach(function(r) {
+    var btn = document.createElement('button');
+    btn.className = 'reaction-btn';
+
+    var emojiSpan = document.createElement('span');
+    emojiSpan.className = 'r-emoji';
+    emojiSpan.textContent = r.emoji;
+
+    var countSpan = document.createElement('span');
+    countSpan.className = 'r-count';
+    countSpan.textContent = reactions[r.type] || 0;
+
+    btn.appendChild(emojiSpan);
+    btn.appendChild(countSpan);
+
+    btn.addEventListener('click', function() {
+      // Leer el array fresco, actualizar el comentario correcto y guardar
+      var all = getComments();
+      if (!all[index]) return;
+      if (!all[index].reactions) all[index].reactions = { like: 0, love: 0, wow: 0 };
+      all[index].reactions[r.type] = (all[index].reactions[r.type] || 0) + 1;
+      saveComments(all);
+
+      // Actualizar el contador en pantalla
+      countSpan.textContent = all[index].reactions[r.type];
+
+      // Animación pop
+      btn.classList.remove('reacted');
+      void btn.offsetWidth; // reflow para reiniciar
+      btn.classList.add('reacted');
+    });
+
+    reactBox.appendChild(btn);
+  });
+
+  body.appendChild(header);
+  body.appendChild(text);
+  body.appendChild(reactBox);
+
+  div.appendChild(avatar);
+  div.appendChild(body);
+
+  return div;
+}
+
+/* Carga y renderiza todos los comentarios */
+function loadComments() {
+  var comments = getComments();
+  var list = document.getElementById('commentList');
+  list.innerHTML = '';
+
+  if (comments.length === 0) {
+    list.innerHTML = '<div class="cmt-empty">¡Sé el primero en comentar! ✨</div>';
+    return;
+  }
+
+  comments.forEach(function(c, i) {
+    if (!c.time) c.time = Date.now();
+    list.appendChild(buildCommentEl(c, i));
+  });
+}
+
+/* Publica un comentario nuevo */
 function addComment() {
   var name = document.getElementById('cmtName').value.trim();
   var text = document.getElementById('cmtText').value.trim();
   if (!name) { showToast('⚠️ Por favor escribe tu nombre', 'error'); return; }
   if (!text) { showToast('⚠️ Por favor escribe un comentario', 'error'); return; }
 
-  var colors = ['linear-gradient(135deg,#c8732a,#d4a843)','linear-gradient(135deg,#7a8c6e,#4a6a4a)','linear-gradient(135deg,#4a6a8c,#2a4a7a)','linear-gradient(135deg,#8c4a6a,#6a2a4a)','linear-gradient(135deg,#6a4a8c,#4a2a7a)'];
+  var colors = [
+    'linear-gradient(135deg,#c8732a,#d4a843)',
+    'linear-gradient(135deg,#7a8c6e,#4a6a4a)',
+    'linear-gradient(135deg,#4a6a8c,#2a4a7a)',
+    'linear-gradient(135deg,#8c4a6a,#6a2a4a)',
+    'linear-gradient(135deg,#6a4a8c,#4a2a7a)'
+  ];
   var color = colors[Math.floor(Math.random() * colors.length)];
-  
-  var now = new Date();
-  var timestamp = now.getTime(); // milisegundos exactos
+  var timestamp = Date.now();
+  var newComment = { name: name, text: text, color: color, time: timestamp, reactions: { like: 0, love: 0, wow: 0 } };
 
-  var commentDiv = document.createElement('div');
-  commentDiv.className = 'cmt';
-  commentDiv.innerHTML =
-    '<div class="cmt-avatar" style="background:' + color + '">' + escHtml(name[0].toUpperCase()) + '</div>' +
-    '<div style="flex:1"><div class="cmt-author">' + escHtml(name) + '</div>' +
-    '<div class="cmt-date">' + timeAgo(timestamp) + '</div>' +
-    '<p class="cmt-text">' + escHtml(text) + '</p></div>';
-  document.getElementById('commentList').appendChild(commentDiv);
+  // Guardar en localStorage PRIMERO (con reacciones en 0)
+  var comments = getComments();
+  comments = comments.map(function(c) { if (!c.time) c.time = Date.now(); return c; });
+  comments.push(newComment);
+  saveComments(comments);
 
-  try {
-    var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
+  // Renderizar en el DOM con el índice correcto
+  var list = document.getElementById('commentList');
+  var empty = list.querySelector('.cmt-empty');
+  if (empty) empty.remove();
+  list.appendChild(buildCommentEl(newComment, comments.length - 1));
 
-    // Convertir antiguos comentarios sin "time"
-    comments = comments.map(c => {
-      if (!c.time) {
-        c.time = new Date().getTime(); // o intentar parsear c.date si quieres conservar la fecha
-      }
-      return c;
-    });
-
-    comments.push({ name: name, text: text, color: color, time: timestamp });
-    localStorage.setItem('portfolio_comments', JSON.stringify(comments));
-  } catch(e) {}
-
+  // Limpiar formulario
   document.getElementById('cmtName').value = '';
-  document.getElementById('cmtEmail').value = '';
+  try { document.getElementById('cmtEmail').value = ''; } catch(e) {}
   document.getElementById('cmtText').value = '';
   showToast('💬 ¡Comentario publicado!', 'success');
 }
 
-function loadComments() {
-  try {
-    var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
-    var list = document.getElementById('commentList');
-    list.innerHTML = ''; // limpiar antes
-
-    comments.forEach(function(c) {
-      if (!c.time) c.time = new Date().getTime();
-
-      var div = document.createElement('div');
-      div.className = 'cmt';
-      div.innerHTML =
-        '<div class="cmt-avatar" style="background:' + c.color + '">' + escHtml(c.name[0].toUpperCase()) + '</div>' +
-        '<div style="flex:1"><div class="cmt-author">' + escHtml(c.name) + '</div>' +
-        '<div class="cmt-date">' + timeAgo(c.time) + '</div>' +
-        '<p class="cmt-text">' + escHtml(c.text) + '</p></div>';
-
-      // Añadir botones de reacción
-      div.appendChild(createReactions(c));
-
-      list.appendChild(div);
-    });
-  } catch(e) {}
-}
-
+/* timeAgo en español compacto */
 function timeAgo(timestamp) {
-  var seconds = Math.floor((Date.now() - timestamp) / 1000);
-
-  if (seconds < 60) return "Publicado hace " + seconds + " segundos";
-
-  var minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return "Publicado hace " + minutes + (minutes === 1 ? " minuto" : " minutos");
-
-  var hours = Math.floor(minutes / 60);
-  if (hours < 24) return "Publicado hace " + hours + (hours === 1 ? " hora" : " horas");
-
-  var days = Math.floor(hours / 24);
-  if (days < 30) return "Publicado hace " + days + (days === 1 ? " día" : " días");
-
-  var months = Math.floor(days / 30);
-  if (months < 12) return "Publicado hace " + months + (months === 1 ? " mes" : " meses");
-
-  var years = Math.floor(months / 12);
-  return "Publicado hace " + years + (years === 1 ? " año" : " años");
+  var s = Math.floor((Date.now() - timestamp) / 1000);
+  if (s < 60)  return 'Hace ' + s + (s === 1 ? ' segundo' : ' segundos');
+  var m = Math.floor(s / 60);
+  if (m < 60)  return 'Hace ' + m + (m === 1 ? ' minuto' : ' minutos');
+  var h = Math.floor(m / 60);
+  if (h < 24)  return 'Hace ' + h + (h === 1 ? ' hora' : ' horas');
+  var d = Math.floor(h / 24);
+  if (d < 30)  return 'Hace ' + d + (d === 1 ? ' día' : ' días');
+  var mo = Math.floor(d / 30);
+  if (mo < 12) return 'Hace ' + mo + (mo === 1 ? ' mes' : ' meses');
+  var y = Math.floor(mo / 12);
+  return 'Hace ' + y + (y === 1 ? ' año' : ' años');
 }
 
-function createReactions(comment) {
-  var reactions = comment.reactions || { like: 0, love: 0, wow: 0 };
-  var container = document.createElement('div');
-  container.className = 'cmt-reactions';
-
-  ['like','love','wow'].forEach(function(type){
-    var btn = document.createElement('button');
-    btn.className = 'reaction-btn';
-    var emoji = type === 'like' ? '👍' : type === 'love' ? '❤️' : '😲';
-    btn.innerHTML = emoji + ' ' + reactions[type];
-    btn.addEventListener('click', function(){
-      reactions[type]++;
-      btn.innerHTML = emoji + ' ' + reactions[type];
-      comment.reactions = reactions;
-      saveComments(); // actualizar localStorage
-    });
-    container.appendChild(btn);
-  });
-
-  return container;
-}
-
-function saveComments() {
-  try {
-    var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
-    localStorage.setItem('portfolio_comments', JSON.stringify(comments));
-  } catch(e) {}
-}
-
-
-
-setInterval(function() {
-  var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
-  var list = document.getElementById('commentList');
-  list.innerHTML = '';
-  comments.forEach(function(c) {
-    var div = document.createElement('div');
-    div.className = 'cmt';
-    div.innerHTML =
-      '<div class="cmt-avatar" style="background:' + c.color + '">' + escHtml(c.name[0].toUpperCase()) + '</div>' +
-      '<div style="flex:1"><div class="cmt-author">' + escHtml(c.name) + '</div>' +
-      '<div class="cmt-date">' + timeAgo(c.time) + '</div>' +
-      '<p class="cmt-text">' + escHtml(c.text) + '</p></div>';
-    list.appendChild(div);
-  });
-}, 60000); // actualiza cada 60 segundos
-
-
+/* Actualiza las fechas cada 60s recargando los comentarios */
+setInterval(function() { loadComments(); }, 60000);
 
 // =============================================================
 // TOAST
 // =============================================================
 function showToast(msg, type) {
   var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast';
+  t.textContent = msg; t.className = 'toast';
   if (type) t.classList.add(type);
-  t.classList.add('show');
-  clearTimeout(t._t);
+  t.classList.add('show'); clearTimeout(t._t);
   t._t = setTimeout(function() { t.classList.remove('show'); }, 4000);
 }
 
 // =============================================================
-// DATA — FLASHCARDS
+// FLASHCARDS DATA
 // =============================================================
 var FLASHCARDS = [
   {w:'Apple',t:'Manzana',e:'I eat an apple every day.',ph:'/ˈæp.əl/',cat:'food',emoji:'🍎'},
@@ -1200,231 +1072,64 @@ var FLASHCARDS = [
 ];
 
 var VERBS = [
-  {v:'be',es:'ser/estar',tenses:[
-    {name:'Present Simple',rows:[['I','am'],['You','are'],['He/She/It','is'],['We','are'],['You (pl.)','are'],['They','are']]},
-    {name:'Past Simple',rows:[['I','was'],['You','were'],['He/She/It','was'],['We','were'],['You (pl.)','were'],['They','were']]},
-    {name:'Future (will)',rows:[['I','will be'],['You','will be'],['He/She/It','will be'],['We','will be'],['You (pl.)','will be'],['They','will be']]},
-    {name:'Present Perfect',rows:[['I','have been'],['You','have been'],['He/She/It','has been'],['We','have been'],['You (pl.)','have been'],['They','have been']]},
-  ]},
-  {v:'have',es:'tener',tenses:[
-    {name:'Present Simple',rows:[['I','have'],['You','have'],['He/She/It','has'],['We','have'],['You (pl.)','have'],['They','have']]},
-    {name:'Past Simple',rows:[['I','had'],['You','had'],['He/She/It','had'],['We','had'],['You (pl.)','had'],['They','had']]},
-    {name:'Future (will)',rows:[['I','will have'],['You','will have'],['He/She/It','will have'],['We','will have'],['You (pl.)','will have'],['They','will have']]},
-    {name:'Present Perfect',rows:[['I','have had'],['You','have had'],['He/She/It','has had'],['We','have had'],['You (pl.)','have had'],['They','have had']]},
-  ]},
-  {v:'go',es:'ir',tenses:[
-    {name:'Present Simple',rows:[['I','go'],['You','go'],['He/She/It','goes'],['We','go'],['You (pl.)','go'],['They','go']]},
-    {name:'Past Simple',rows:[['I','went'],['You','went'],['He/She/It','went'],['We','went'],['You (pl.)','went'],['They','went']]},
-    {name:'Future (will)',rows:[['I','will go'],['You','will go'],['He/She/It','will go'],['We','will go'],['You (pl.)','will go'],['They','will go']]},
-    {name:'Present Perfect',rows:[['I','have gone'],['You','have gone'],['He/She/It','has gone'],['We','have gone'],['You (pl.)','have gone'],['They','have gone']]},
-  ]},
-  {v:'do',es:'hacer',tenses:[
-    {name:'Present Simple',rows:[['I','do'],['You','do'],['He/She/It','does'],['We','do'],['You (pl.)','do'],['They','do']]},
-    {name:'Past Simple',rows:[['I','did'],['You','did'],['He/She/It','did'],['We','did'],['You (pl.)','did'],['They','did']]},
-    {name:'Future (will)',rows:[['I','will do'],['You','will do'],['He/She/It','will do'],['We','will do'],['You (pl.)','will do'],['They','will do']]},
-    {name:'Present Perfect',rows:[['I','have done'],['You','have done'],['He/She/It','has done'],['We','have done'],['You (pl.)','have done'],['They','have done']]},
-  ]},
-  {v:'make',es:'hacer/crear',tenses:[
-    {name:'Present Simple',rows:[['I','make'],['You','make'],['He/She/It','makes'],['We','make'],['You (pl.)','make'],['They','make']]},
-    {name:'Past Simple',rows:[['I','made'],['You','made'],['He/She/It','made'],['We','made'],['You (pl.)','made'],['They','made']]},
-    {name:'Future (will)',rows:[['I','will make'],['You','will make'],['He/She/It','will make'],['We','will make'],['You (pl.)','will make'],['They','will make']]},
-    {name:'Present Perfect',rows:[['I','have made'],['You','have made'],['He/She/It','has made'],['We','have made'],['You (pl.)','have made'],['They','have made']]},
-  ]},
-  {v:'speak',es:'hablar',tenses:[
-    {name:'Present Simple',rows:[['I','speak'],['You','speak'],['He/She/It','speaks'],['We','speak'],['You (pl.)','speak'],['They','speak']]},
-    {name:'Past Simple',rows:[['I','spoke'],['You','spoke'],['He/She/It','spoke'],['We','spoke'],['You (pl.)','spoke'],['They','spoke']]},
-    {name:'Future (will)',rows:[['I','will speak'],['You','will speak'],['He/She/It','will speak'],['We','will speak'],['You (pl.)','will speak'],['They','will speak']]},
-    {name:'Present Perfect',rows:[['I','have spoken'],['You','have spoken'],['He/She/It','has spoken'],['We','have spoken'],['You (pl.)','have spoken'],['They','have spoken']]},
-  ]},
-  {v:'write',es:'escribir',tenses:[
-    {name:'Present Simple',rows:[['I','write'],['You','write'],['He/She/It','writes'],['We','write'],['You (pl.)','write'],['They','write']]},
-    {name:'Past Simple',rows:[['I','wrote'],['You','wrote'],['He/She/It','wrote'],['We','wrote'],['You (pl.)','wrote'],['They','wrote']]},
-    {name:'Future (will)',rows:[['I','will write'],['You','will write'],['He/She/It','will write'],['We','will write'],['You (pl.)','will write'],['They','will write']]},
-    {name:'Present Perfect',rows:[['I','have written'],['You','have written'],['He/She/It','has written'],['We','have written'],['You (pl.)','have written'],['They','have written']]},
-  ]},
-  {v:'eat',es:'comer',tenses:[
-    {name:'Present Simple',rows:[['I','eat'],['You','eat'],['He/She/It','eats'],['We','eat'],['You (pl.)','eat'],['They','eat']]},
-    {name:'Past Simple',rows:[['I','ate'],['You','ate'],['He/She/It','ate'],['We','ate'],['You (pl.)','ate'],['They','ate']]},
-    {name:'Future (will)',rows:[['I','will eat'],['You','will eat'],['He/She/It','will eat'],['We','will eat'],['You (pl.)','will eat'],['They','will eat']]},
-    {name:'Present Perfect',rows:[['I','have eaten'],['You','have eaten'],['He/She/It','has eaten'],['We','have eaten'],['You (pl.)','have eaten'],['They','have eaten']]},
-  ]},
-  {v:'study',es:'estudiar',tenses:[
-    {name:'Present Simple',rows:[['I','study'],['You','study'],['He/She/It','studies'],['We','study'],['You (pl.)','study'],['They','study']]},
-    {name:'Past Simple',rows:[['I','studied'],['You','studied'],['He/She/It','studied'],['We','studied'],['You (pl.)','studied'],['They','studied']]},
-    {name:'Future (will)',rows:[['I','will study'],['You','will study'],['He/She/It','will study'],['We','will study'],['You (pl.)','will study'],['They','will study']]},
-    {name:'Present Perfect',rows:[['I','have studied'],['You','have studied'],['He/She/It','has studied'],['We','have studied'],['You (pl.)','have studied'],['They','have studied']]},
-  ]},
-  {v:'know',es:'saber/conocer',tenses:[
-    {name:'Present Simple',rows:[['I','know'],['You','know'],['He/She/It','knows'],['We','know'],['You (pl.)','know'],['They','know']]},
-    {name:'Past Simple',rows:[['I','knew'],['You','knew'],['He/She/It','knew'],['We','knew'],['You (pl.)','knew'],['They','knew']]},
-    {name:'Future (will)',rows:[['I','will know'],['You','will know'],['He/She/It','will know'],['We','will know'],['You (pl.)','will know'],['They','will know']]},
-    {name:'Present Perfect',rows:[['I','have known'],['You','have known'],['He/She/It','has known'],['We','have known'],['You (pl.)','have known'],['They','have known']]},
-  ]},
+  {v:'be',es:'ser/estar',tenses:[{name:'Present Simple',rows:[['I','am'],['You','are'],['He/She/It','is'],['We','are'],['You (pl.)','are'],['They','are']]},{name:'Past Simple',rows:[['I','was'],['You','were'],['He/She/It','was'],['We','were'],['You (pl.)','were'],['They','were']]},{name:'Future (will)',rows:[['I','will be'],['You','will be'],['He/She/It','will be'],['We','will be'],['You (pl.)','will be'],['They','will be']]},{name:'Present Perfect',rows:[['I','have been'],['You','have been'],['He/She/It','has been'],['We','have been'],['You (pl.)','have been'],['They','have been']]}]},
+  {v:'have',es:'tener',tenses:[{name:'Present Simple',rows:[['I','have'],['You','have'],['He/She/It','has'],['We','have'],['You (pl.)','have'],['They','have']]},{name:'Past Simple',rows:[['I','had'],['You','had'],['He/She/It','had'],['We','had'],['You (pl.)','had'],['They','had']]},{name:'Future (will)',rows:[['I','will have'],['You','will have'],['He/She/It','will have'],['We','will have'],['You (pl.)','will have'],['They','will have']]},{name:'Present Perfect',rows:[['I','have had'],['You','have had'],['He/She/It','has had'],['We','have had'],['You (pl.)','have had'],['They','have had']]}]},
+  {v:'go',es:'ir',tenses:[{name:'Present Simple',rows:[['I','go'],['You','go'],['He/She/It','goes'],['We','go'],['You (pl.)','go'],['They','go']]},{name:'Past Simple',rows:[['I','went'],['You','went'],['He/She/It','went'],['We','went'],['You (pl.)','went'],['They','went']]},{name:'Future (will)',rows:[['I','will go'],['You','will go'],['He/She/It','will go'],['We','will go'],['You (pl.)','will go'],['They','will go']]},{name:'Present Perfect',rows:[['I','have gone'],['You','have gone'],['He/She/It','has gone'],['We','have gone'],['You (pl.)','have gone'],['They','have gone']]}]},
+  {v:'do',es:'hacer',tenses:[{name:'Present Simple',rows:[['I','do'],['You','do'],['He/She/It','does'],['We','do'],['You (pl.)','do'],['They','do']]},{name:'Past Simple',rows:[['I','did'],['You','did'],['He/She/It','did'],['We','did'],['You (pl.)','did'],['They','did']]},{name:'Future (will)',rows:[['I','will do'],['You','will do'],['He/She/It','will do'],['We','will do'],['You (pl.)','will do'],['They','will do']]},{name:'Present Perfect',rows:[['I','have done'],['You','have done'],['He/She/It','has done'],['We','have done'],['You (pl.)','have done'],['They','have done']]}]},
+  {v:'make',es:'hacer/crear',tenses:[{name:'Present Simple',rows:[['I','make'],['You','make'],['He/She/It','makes'],['We','make'],['You (pl.)','make'],['They','make']]},{name:'Past Simple',rows:[['I','made'],['You','made'],['He/She/It','made'],['We','made'],['You (pl.)','made'],['They','made']]},{name:'Future (will)',rows:[['I','will make'],['You','will make'],['He/She/It','will make'],['We','will make'],['You (pl.)','will make'],['They','will make']]},{name:'Present Perfect',rows:[['I','have made'],['You','have made'],['He/She/It','has made'],['We','have made'],['You (pl.)','have made'],['They','have made']]}]},
+  {v:'speak',es:'hablar',tenses:[{name:'Present Simple',rows:[['I','speak'],['You','speak'],['He/She/It','speaks'],['We','speak'],['You (pl.)','speak'],['They','speak']]},{name:'Past Simple',rows:[['I','spoke'],['You','spoke'],['He/She/It','spoke'],['We','spoke'],['You (pl.)','spoke'],['They','spoke']]},{name:'Future (will)',rows:[['I','will speak'],['You','will speak'],['He/She/It','will speak'],['We','will speak'],['You (pl.)','will speak'],['They','will speak']]},{name:'Present Perfect',rows:[['I','have spoken'],['You','have spoken'],['He/She/It','has spoken'],['We','have spoken'],['You (pl.)','have spoken'],['They','have spoken']]}]},
+  {v:'write',es:'escribir',tenses:[{name:'Present Simple',rows:[['I','write'],['You','write'],['He/She/It','writes'],['We','write'],['You (pl.)','write'],['They','write']]},{name:'Past Simple',rows:[['I','wrote'],['You','wrote'],['He/She/It','wrote'],['We','wrote'],['You (pl.)','wrote'],['They','wrote']]},{name:'Future (will)',rows:[['I','will write'],['You','will write'],['He/She/It','will write'],['We','will write'],['You (pl.)','will write'],['They','will write']]},{name:'Present Perfect',rows:[['I','have written'],['You','have written'],['He/She/It','has written'],['We','have written'],['You (pl.)','have written'],['They','have written']]}]},
+  {v:'eat',es:'comer',tenses:[{name:'Present Simple',rows:[['I','eat'],['You','eat'],['He/She/It','eats'],['We','eat'],['You (pl.)','eat'],['They','eat']]},{name:'Past Simple',rows:[['I','ate'],['You','ate'],['He/She/It','ate'],['We','ate'],['You (pl.)','ate'],['They','ate']]},{name:'Future (will)',rows:[['I','will eat'],['You','will eat'],['He/She/It','will eat'],['We','will eat'],['You (pl.)','will eat'],['They','will eat']]},{name:'Present Perfect',rows:[['I','have eaten'],['You','have eaten'],['He/She/It','has eaten'],['We','have eaten'],['You (pl.)','have eaten'],['They','have eaten']]}]},
+  {v:'study',es:'estudiar',tenses:[{name:'Present Simple',rows:[['I','study'],['You','study'],['He/She/It','studies'],['We','study'],['You (pl.)','study'],['They','study']]},{name:'Past Simple',rows:[['I','studied'],['You','studied'],['He/She/It','studied'],['We','studied'],['You (pl.)','studied'],['They','studied']]},{name:'Future (will)',rows:[['I','will study'],['You','will study'],['He/She/It','will study'],['We','will study'],['You (pl.)','will study'],['They','will study']]},{name:'Present Perfect',rows:[['I','have studied'],['You','have studied'],['He/She/It','has studied'],['We','have studied'],['You (pl.)','have studied'],['They','have studied']]}]},
+  {v:'know',es:'saber/conocer',tenses:[{name:'Present Simple',rows:[['I','know'],['You','know'],['He/She/It','knows'],['We','know'],['You (pl.)','know'],['They','know']]},{name:'Past Simple',rows:[['I','knew'],['You','knew'],['He/She/It','knew'],['We','knew'],['You (pl.)','knew'],['They','knew']]},{name:'Future (will)',rows:[['I','will know'],['You','will know'],['He/She/It','will know'],['We','will know'],['You (pl.)','will know'],['They','will know']]},{name:'Present Perfect',rows:[['I','have known'],['You','have known'],['He/She/It','has known'],['We','have known'],['You (pl.)','have known'],['They','have known']]}]},
 ];
 
 var PHRASES = [
-  {en:'How are you?',es:'¿Cómo estás?',cat:'Greetings'},
-  {en:'Nice to meet you.',es:'Mucho gusto.',cat:'Greetings'},
-  {en:'See you later!',es:'¡Hasta luego!',cat:'Greetings'},
-  {en:'Could you repeat that?',es:'¿Podrías repetir eso?',cat:'Classroom'},
-  {en:"I don't understand.",es:'No entiendo.',cat:'Classroom'},
-  {en:'How do you say ___ in English?',es:'¿Cómo se dice ___ en inglés?',cat:'Classroom'},
-  {en:'What time is it?',es:'¿Qué hora es?',cat:'Daily Life'},
-  {en:'Where is the bathroom?',es:'¿Dónde está el baño?',cat:'Daily Life'},
-  {en:'How much does it cost?',es:'¿Cuánto cuesta?',cat:'Daily Life'},
-  {en:'Can I help you?',es:'¿Puedo ayudarte?',cat:'Social'},
-  {en:'I agree with you.',es:'Estoy de acuerdo contigo.',cat:'Social'},
-  {en:'That is a great idea!',es:'¡Esa es una gran idea!',cat:'Social'},
-  {en:'I am sorry, I made a mistake.',es:'Lo siento, cometí un error.',cat:'Social'},
-  {en:'Let me think about it.',es:'Déjame pensarlo.',cat:'Academic'},
-  {en:'In my opinion...',es:'En mi opinión...',cat:'Academic'},
-  {en:'On the other hand...',es:'Por otro lado...',cat:'Academic'},
-  {en:'To sum up...',es:'Para resumir...',cat:'Academic'},
-  {en:'For example...',es:'Por ejemplo...',cat:'Academic'},
-  {en:'Could you speak more slowly?',es:'¿Podrías hablar más despacio?',cat:'Classroom'},
-  {en:'I would like to...',es:'Me gustaría...',cat:'Daily Life'},
-  {en:'What do you think?',es:'¿Qué piensas?',cat:'Social'},
+  {en:'How are you?',es:'¿Cómo estás?',cat:'Greetings'},{en:'Nice to meet you.',es:'Mucho gusto.',cat:'Greetings'},{en:'See you later!',es:'¡Hasta luego!',cat:'Greetings'},
+  {en:'Could you repeat that?',es:'¿Podrías repetir eso?',cat:'Classroom'},{en:"I don't understand.",es:'No entiendo.',cat:'Classroom'},{en:'How do you say ___ in English?',es:'¿Cómo se dice ___ en inglés?',cat:'Classroom'},
+  {en:'What time is it?',es:'¿Qué hora es?',cat:'Daily Life'},{en:'Where is the bathroom?',es:'¿Dónde está el baño?',cat:'Daily Life'},{en:'How much does it cost?',es:'¿Cuánto cuesta?',cat:'Daily Life'},
+  {en:'Can I help you?',es:'¿Puedo ayudarte?',cat:'Social'},{en:'I agree with you.',es:'Estoy de acuerdo contigo.',cat:'Social'},{en:'That is a great idea!',es:'¡Esa es una gran idea!',cat:'Social'},
+  {en:'I am sorry, I made a mistake.',es:'Lo siento, cometí un error.',cat:'Social'},{en:'Let me think about it.',es:'Déjame pensarlo.',cat:'Academic'},{en:'In my opinion...',es:'En mi opinión...',cat:'Academic'},
+  {en:'On the other hand...',es:'Por otro lado...',cat:'Academic'},{en:'To sum up...',es:'Para resumir...',cat:'Academic'},{en:'For example...',es:'Por ejemplo...',cat:'Academic'},
+  {en:'Could you speak more slowly?',es:'¿Podrías hablar más despacio?',cat:'Classroom'},{en:'I would like to...',es:'Me gustaría...',cat:'Daily Life'},{en:'What do you think?',es:'¿Qué piensas?',cat:'Social'},
   {en:'It was a pleasure.',es:'Fue un placer.',cat:'Greetings'},
 ];
 
 var WORD_BUILDER = [
-  {w:'APPLE',es:'Manzana',emoji:'🍎',hint:'Una fruta roja o verde'},
-  {w:'HAPPY',es:'Feliz',emoji:'😊',hint:'Emoción positiva'},
-  {w:'SCHOOL',es:'Escuela',emoji:'🏫',hint:'Lugar donde estudias'},
-  {w:'WATER',es:'Agua',emoji:'💧',hint:'Líquido esencial para vivir'},
-  {w:'FRIEND',es:'Amigo',emoji:'👫',hint:'Persona cercana a ti'},
-  {w:'MUSIC',es:'Música',emoji:'🎵',hint:'Arte de los sonidos'},
-  {w:'HOUSE',es:'Casa',emoji:'🏠',hint:'Donde vives'},
-  {w:'BOOK',es:'Libro',emoji:'📚',hint:'Lo que lees para aprender'},
-  {w:'DREAM',es:'Sueño',emoji:'💭',hint:'Lo que imaginas dormido o despierto'},
-  {w:'FLOWER',es:'Flor',emoji:'🌸',hint:'Parte colorida de una planta'},
-  {w:'STARS',es:'Estrellas',emoji:'⭐',hint:'Brillan en el cielo de noche'},
-  {w:'HEART',es:'Corazón',emoji:'❤️',hint:'Símbolo del amor'},
-  {w:'OCEAN',es:'Océano',emoji:'🌊',hint:'Gran masa de agua salada'},
-  {w:'BREAD',es:'Pan',emoji:'🍞',hint:'Alimento hecho de trigo'},
+  {w:'APPLE',es:'Manzana',emoji:'🍎',hint:'Una fruta roja o verde'},{w:'HAPPY',es:'Feliz',emoji:'😊',hint:'Emoción positiva'},
+  {w:'SCHOOL',es:'Escuela',emoji:'🏫',hint:'Lugar donde estudias'},{w:'WATER',es:'Agua',emoji:'💧',hint:'Líquido esencial para vivir'},
+  {w:'FRIEND',es:'Amigo',emoji:'👫',hint:'Persona cercana a ti'},{w:'MUSIC',es:'Música',emoji:'🎵',hint:'Arte de los sonidos'},
+  {w:'HOUSE',es:'Casa',emoji:'🏠',hint:'Donde vives'},{w:'BOOK',es:'Libro',emoji:'📚',hint:'Lo que lees para aprender'},
+  {w:'DREAM',es:'Sueño',emoji:'💭',hint:'Lo que imaginas dormido o despierto'},{w:'FLOWER',es:'Flor',emoji:'🌸',hint:'Parte colorida de una planta'},
+  {w:'STARS',es:'Estrellas',emoji:'⭐',hint:'Brillan en el cielo de noche'},{w:'HEART',es:'Corazón',emoji:'❤️',hint:'Símbolo del amor'},
+  {w:'OCEAN',es:'Océano',emoji:'🌊',hint:'Gran masa de agua salada'},{w:'BREAD',es:'Pan',emoji:'🍞',hint:'Alimento hecho de trigo'},
   {w:'CLOCK',es:'Reloj',emoji:'⏰',hint:'Marca las horas del día'},
 ];
 
 // =============================================================
 // FLASHCARDS
 // =============================================================
-var fcCat = 'all', fcIdx = 0, fcFlipped = false, fcFiltered = FLASHCARDS;
-
-function setFCcat(cat, btn) {
-  fcCat = cat; fcIdx = 0;
-  document.querySelectorAll('.fc-cat').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  renderFC();
-}
-
-function renderFC() {
-  fcFiltered = fcCat === 'all' ? FLASHCARDS : FLASHCARDS.filter(function(c){ return c.cat === fcCat; });
-  if (!fcFiltered.length) return;
-  if (fcIdx >= fcFiltered.length) fcIdx = 0;
-  var c = fcFiltered[fcIdx];
-  document.getElementById('fc-emoji').textContent = c.emoji;
-  document.getElementById('fc-word').textContent = c.w;
-  document.getElementById('fc-translation').textContent = c.t;
-  document.getElementById('fc-example').textContent = '"' + c.e + '"';
-  document.getElementById('fc-phonetic').textContent = c.ph;
-  fcFlipped = false;
-  document.getElementById('fc-inner').style.transform = 'rotateY(0deg)';
-  document.getElementById('fc-prog').style.width = ((fcIdx + 1) / fcFiltered.length * 100).toFixed(0) + '%';
-  document.getElementById('fc-counter').textContent = (fcIdx + 1) + ' / ' + fcFiltered.length;
-}
-
-function flipFC() {
-  fcFlipped = !fcFlipped;
-  document.getElementById('fc-inner').style.transform = fcFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
-}
-
-function fcNav(dir) {
-  fcIdx = (fcIdx + dir + fcFiltered.length) % fcFiltered.length;
-  renderFC();
-}
-
-function speakWord() {
-  var word = fcFiltered[fcIdx] && fcFiltered[fcIdx].w;
-  if (!word) return;
-  var u = new SpeechSynthesisUtterance(word);
-  u.lang = 'en-US'; u.rate = 0.9;
-  window.speechSynthesis.speak(u);
-}
+var fcCat='all',fcIdx=0,fcFlipped=false,fcFiltered=FLASHCARDS;
+function setFCcat(cat,btn){fcCat=cat;fcIdx=0;document.querySelectorAll('.fc-cat').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');renderFC();}
+function renderFC(){fcFiltered=fcCat==='all'?FLASHCARDS:FLASHCARDS.filter(function(c){return c.cat===fcCat;});if(!fcFiltered.length)return;if(fcIdx>=fcFiltered.length)fcIdx=0;var c=fcFiltered[fcIdx];document.getElementById('fc-emoji').textContent=c.emoji;document.getElementById('fc-word').textContent=c.w;document.getElementById('fc-translation').textContent=c.t;document.getElementById('fc-example').textContent='"'+c.e+'"';document.getElementById('fc-phonetic').textContent=c.ph;fcFlipped=false;document.getElementById('fc-inner').style.transform='rotateY(0deg)';document.getElementById('fc-prog').style.width=((fcIdx+1)/fcFiltered.length*100).toFixed(0)+'%';document.getElementById('fc-counter').textContent=(fcIdx+1)+' / '+fcFiltered.length;}
+function flipFC(){fcFlipped=!fcFlipped;document.getElementById('fc-inner').style.transform=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';}
+function fcNav(dir){fcIdx=(fcIdx+dir+fcFiltered.length)%fcFiltered.length;renderFC();}
+function speakWord(){var word=fcFiltered[fcIdx]&&fcFiltered[fcIdx].w;if(!word)return;var u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.9;window.speechSynthesis.speak(u);}
 
 // =============================================================
 // VERBS
 // =============================================================
-function initVerbs() {
-  var list = document.getElementById('verbList');
-  if (!list) return;
-  list.innerHTML = '';
-  VERBS.forEach(function(v) {
-    var btn = document.createElement('button');
-    btn.className = 'verb-chip';
-    btn.textContent = v.v;
-    btn.onclick = (function(vb, b){ return function(){ showVerb(vb, b); }; })(v, btn);
-    list.appendChild(btn);
-  });
-}
-
-function showVerb(vb, btn) {
-  document.querySelectorAll('.verb-chip').forEach(function(b){ b.classList.remove('selected'); });
-  btn.classList.add('selected');
-  var box = document.getElementById('verb-table-box');
-  box.style.display = 'block';
-  document.getElementById('vt-title').textContent = vb.v.charAt(0).toUpperCase() + vb.v.slice(1);
-  document.getElementById('vt-meaning').textContent = 'Significado en español: ' + vb.es;
-  var body = document.getElementById('vt-body');
-  body.innerHTML = '';
-  vb.tenses.forEach(function(t) {
-    var block = document.createElement('div');
-    block.className = 'tense-block';
-    var nameDiv = document.createElement('div');
-    nameDiv.className = 'tense-name';
-    nameDiv.textContent = t.name;
-    block.appendChild(nameDiv);
-    var grid = document.createElement('div');
-    grid.className = 'conj-grid';
-    t.rows.forEach(function(r) {
-      var row = document.createElement('div');
-      row.className = 'conj-row';
-      row.innerHTML = '<span class="conj-pro">' + r[0] + '</span><span class="conj-form">' + r[1] + '</span>';
-      grid.appendChild(row);
-    });
-    block.appendChild(grid);
-    body.appendChild(block);
-  });
-}
+function initVerbs(){var list=document.getElementById('verbList');if(!list)return;list.innerHTML='';VERBS.forEach(function(v){var btn=document.createElement('button');btn.className='verb-chip';btn.textContent=v.v;btn.onclick=(function(vb,b){return function(){showVerb(vb,b);};})(v,btn);list.appendChild(btn);});}
+function showVerb(vb,btn){document.querySelectorAll('.verb-chip').forEach(function(b){b.classList.remove('selected');});btn.classList.add('selected');var box=document.getElementById('verb-table-box');box.style.display='block';document.getElementById('vt-title').textContent=vb.v.charAt(0).toUpperCase()+vb.v.slice(1);document.getElementById('vt-meaning').textContent='Significado en español: '+vb.es;var body=document.getElementById('vt-body');body.innerHTML='';vb.tenses.forEach(function(t){var block=document.createElement('div');block.className='tense-block';var nameDiv=document.createElement('div');nameDiv.className='tense-name';nameDiv.textContent=t.name;block.appendChild(nameDiv);var grid=document.createElement('div');grid.className='conj-grid';t.rows.forEach(function(r){var row=document.createElement('div');row.className='conj-row';row.innerHTML='<span class="conj-pro">'+r[0]+'</span><span class="conj-form">'+r[1]+'</span>';grid.appendChild(row);});block.appendChild(grid);body.appendChild(block);});}
 
 // =============================================================
 // QUIZ
 // =============================================================
 var quizBank=[],quizIdx=0,quizScore=0,quizLives=3,quizCat='mixed',quizAnswered=false;
-
-function shuffle(arr) { return arr.slice().sort(function(){ return Math.random()-.5; }); }
-function getRandTranslations(exclude,n){ return shuffle(FLASHCARDS.map(function(c){return c.t;}).filter(function(t){return t!==exclude;})).slice(0,n); }
-function getRandWords(exclude,n){ return shuffle(FLASHCARDS.map(function(c){return c.w;}).filter(function(w){return w!==exclude;})).slice(0,n); }
-
-function buildQuizBank(cat) {
-  var bank = [];
-  FLASHCARDS.forEach(function(c) {
-    bank.push({type:'vocab',q:'What is the Spanish word for: "'+c.w+'"?',opts:shuffle([c.t].concat(getRandTranslations(c.t,3))),correct:c.t,cat:'vocab'});
-    bank.push({type:'vocab',q:'¿Cuál es la traducción al inglés de: "'+c.t+'"?',opts:shuffle([c.w].concat(getRandWords(c.w,3))),correct:c.w,cat:'vocab'});
-  });
-  VERBS.forEach(function(vb) {
-    vb.tenses.forEach(function(t) {
-      t.rows.forEach(function(r) {
-        var pro=r[0],form=r[1];
-        var others=t.rows.filter(function(x){return x[0]!==pro;}).map(function(x){return x[1];}).filter(function(v,i,a){return a.indexOf(v)===i;});
-        if(others.length>=3) bank.push({type:'verb',q:'Complete: "'+pro+' ___ ('+vb.v+')" — '+t.name,opts:shuffle([form].concat(shuffle(others).slice(0,3))),correct:form,cat:'verbs'});
-      });
-    });
-  });
-  if(cat==='vocab') bank=bank.filter(function(q){return q.cat==='vocab';});
-  else if(cat==='verbs') bank=bank.filter(function(q){return q.cat==='verbs';});
-  return shuffle(bank).slice(0,15);
-}
-
+function shuffle(arr){return arr.slice().sort(function(){return Math.random()-.5;});}
+function getRandTranslations(exclude,n){return shuffle(FLASHCARDS.map(function(c){return c.t;}).filter(function(t){return t!==exclude;})).slice(0,n);}
+function getRandWords(exclude,n){return shuffle(FLASHCARDS.map(function(c){return c.w;}).filter(function(w){return w!==exclude;})).slice(0,n);}
+function buildQuizBank(cat){var bank=[];FLASHCARDS.forEach(function(c){bank.push({type:'vocab',q:'What is the Spanish word for: "'+c.w+'"?',opts:shuffle([c.t].concat(getRandTranslations(c.t,3))),correct:c.t,cat:'vocab'});bank.push({type:'vocab',q:'¿Cuál es la traducción al inglés de: "'+c.t+'"?',opts:shuffle([c.w].concat(getRandWords(c.w,3))),correct:c.w,cat:'vocab'});});VERBS.forEach(function(vb){vb.tenses.forEach(function(t){t.rows.forEach(function(r){var pro=r[0],form=r[1];var others=t.rows.filter(function(x){return x[0]!==pro;}).map(function(x){return x[1];}).filter(function(v,i,a){return a.indexOf(v)===i;});if(others.length>=3)bank.push({type:'verb',q:'Complete: "'+pro+' ___ ('+vb.v+')" — '+t.name,opts:shuffle([form].concat(shuffle(others).slice(0,3))),correct:form,cat:'verbs'});});});});if(cat==='vocab')bank=bank.filter(function(q){return q.cat==='vocab';});else if(cat==='verbs')bank=bank.filter(function(q){return q.cat==='verbs';});return shuffle(bank).slice(0,15);}
 function setQuizCat(cat,btn){quizCat=cat;document.querySelectorAll('.qcat').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');startQuiz();}
 function startQuiz(){quizBank=buildQuizBank(quizCat);quizIdx=0;quizScore=0;quizLives=3;quizAnswered=false;document.getElementById('quiz-result').style.display='none';document.getElementById('quiz-q-box').style.display='';document.getElementById('quiz-opts').style.display='';document.getElementById('quiz-next-btn').style.display='none';updateQuizHUD();renderQuizQ();}
 function updateQuizHUD(){document.getElementById('quiz-score-disp').textContent='Score: '+quizScore;document.getElementById('quiz-lives-disp').textContent='❤️'.repeat(quizLives)+'🖤'.repeat(3-quizLives);}
@@ -1437,7 +1142,6 @@ function endQuiz(){document.getElementById('quiz-q-box').style.display='none';do
 // WORD BUILDER
 // =============================================================
 var wbCurrent=null,wbSelected=[],wbCorrect=0,wbWrong=0;
-
 function loadWB(){var item=WORD_BUILDER[Math.floor(Math.random()*WORD_BUILDER.length)];wbCurrent=item;wbSelected=[];document.getElementById('wb-emoji').textContent=item.emoji;document.getElementById('wb-hint').textContent='Pista: '+item.hint;document.getElementById('wb-extra').textContent='Español: '+item.es;document.getElementById('wb-feedback').textContent='';var slots=document.getElementById('wb-slots');slots.innerHTML='';for(var i=0;i<item.w.length;i++){var slot=document.createElement('div');slot.className='wb-slot';slot.id='slot-'+i;slot.onclick=(function(idx){return function(){wbRemoveLetter(idx);};})(i);slots.appendChild(slot);}var letters=shuffle(item.w.split(''));var lBox=document.getElementById('wb-letters');lBox.innerHTML='';letters.forEach(function(l,i){var btn=document.createElement('div');btn.className='wb-letter-btn';btn.textContent=l;btn.id='wbl-'+i;btn.onclick=(function(letter,idx,b){return function(){wbAddLetter(letter,idx,b);};})(l,i,btn);lBox.appendChild(btn);});}
 function wbAddLetter(letter,btnIdx,btn){var nextSlot=wbSelected.length;if(nextSlot>=wbCurrent.w.length)return;wbSelected.push({letter:letter,btnIdx:btnIdx});btn.classList.add('used');var slot=document.getElementById('slot-'+nextSlot);slot.textContent=letter;slot.classList.add('filled');document.getElementById('wb-feedback').textContent='';}
 function wbRemoveLetter(slotIdx){if(slotIdx>=wbSelected.length)return;for(var i=slotIdx;i<wbSelected.length;i++){document.getElementById('wbl-'+wbSelected[i].btnIdx).classList.remove('used');var slot=document.getElementById('slot-'+i);slot.textContent='';slot.className='wb-slot';}wbSelected=wbSelected.slice(0,slotIdx);}
@@ -1462,5 +1166,4 @@ function showPrac(panel,btn){document.querySelectorAll('.prac-panel').forEach(fu
         crossorigin="anonymous"
         async>
 </script>
-
 </html>
