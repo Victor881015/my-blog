@@ -1027,31 +1027,31 @@ function addComment() {
 
   var colors = ['linear-gradient(135deg,#c8732a,#d4a843)','linear-gradient(135deg,#7a8c6e,#4a6a4a)','linear-gradient(135deg,#4a6a8c,#2a4a7a)','linear-gradient(135deg,#8c4a6a,#6a2a4a)','linear-gradient(135deg,#6a4a8c,#4a2a7a)'];
   var color = colors[Math.floor(Math.random() * colors.length)];
+  
   var now = new Date();
-var timestamp = now.getTime(); // milisegundos exactos
-
-
-
+  var timestamp = now.getTime(); // milisegundos exactos
 
   var commentDiv = document.createElement('div');
   commentDiv.className = 'cmt';
   commentDiv.innerHTML =
     '<div class="cmt-avatar" style="background:' + color + '">' + escHtml(name[0].toUpperCase()) + '</div>' +
     '<div style="flex:1"><div class="cmt-author">' + escHtml(name) + '</div>' +
-    '<div class="cmt-date">' + escHtml(c.date) + '</div>' +
+    '<div class="cmt-date">' + timeAgo(timestamp) + '</div>' +
     '<p class="cmt-text">' + escHtml(text) + '</p></div>';
   document.getElementById('commentList').appendChild(commentDiv);
 
   try {
     var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
-   comments.push({ 
-  name: name, 
-  text: text, 
-  time: timestamp, 
-  color: color 
-});
 
+    // Convertir antiguos comentarios sin "time"
+    comments = comments.map(c => {
+      if (!c.time) {
+        c.time = new Date().getTime(); // o intentar parsear c.date si quieres conservar la fecha
+      }
+      return c;
+    });
 
+    comments.push({ name: name, text: text, color: color, time: timestamp });
     localStorage.setItem('portfolio_comments', JSON.stringify(comments));
   } catch(e) {}
 
@@ -1065,13 +1065,18 @@ function loadComments() {
   try {
     var comments = JSON.parse(localStorage.getItem('portfolio_comments') || '[]');
     var list = document.getElementById('commentList');
+    list.innerHTML = ''; // limpiar antes
+
     comments.forEach(function(c) {
+      // Asegurarse que tenga "time"
+      if (!c.time) c.time = new Date().getTime();
+
       var div = document.createElement('div');
       div.className = 'cmt';
       div.innerHTML =
         '<div class="cmt-avatar" style="background:' + c.color + '">' + escHtml(c.name[0].toUpperCase()) + '</div>' +
         '<div style="flex:1"><div class="cmt-author">' + escHtml(c.name) + '</div>' +
-        '<div class="cmt-date">' + escHtml(c.date) + '</div>' +
+        '<div class="cmt-date">' + timeAgo(c.time) + '</div>' +
         '<p class="cmt-text">' + escHtml(c.text) + '</p></div>';
       list.appendChild(div);
     });
